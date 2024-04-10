@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3123459672457047779}
   m_Layer: 0
   m_Name: resorte_Prefab
-  m_TagString: Untagged
+  m_TagString: Interactuable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992b596b4f4784a4493dae5bec9f6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 862700526, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
-  - {fileID: -1462742125, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
+  spritesArray: []
+  fuerzaResorte: 20

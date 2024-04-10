@@ -8,6 +8,11 @@ TagManager:
   - Enemigo
   - Plataforma
   - Jugador
+  - Proyectil
+  - Nemico
+  - Objeto
+  - Peligro
+  - Interactuable
   layers:
   - Default
   - TransparentFX

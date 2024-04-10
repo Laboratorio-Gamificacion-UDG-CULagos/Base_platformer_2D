@@ -1,28 +1,21 @@
 using UnityEngine;
 
 public class Personaje : MonoBehaviour {
-    private int vida = 6;
-    private float fuerzaMovimiento = 20.0f;
-    private float largoRaycast = 1.05f;
-    private float velocidadBala = 20.0f;
-    public float velocidadMaxima = 6.0f;
-    public float fuerzaSalto = 8.0f;
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
-    private Animator ani;
-    private GameObject hud;
-    public GameObject prefabBala;
-
-    private void Start() {
-        this.rb = this.GetComponent<Rigidbody2D>();
-        this.sr = this.GetComponent<SpriteRenderer>();
-        this.ani = this.GetComponent<Animator>();
-        this.hud = GameObject.Find("HUD");
-    }
+    [SerializeField] private int vida = 6;
+    [SerializeField] private float fuerzaMovimiento = 20.0f;
+    [SerializeField] private float largoRaycast = 1.05f;
+    [SerializeField] private float velocidadBala = 20.0f;
+    [SerializeField] private float velocidadMaxima = 6.0f;
+    [SerializeField] private float fuerzaSalto = 8.0f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private Animator ani;
+    [SerializeField] private GameObject hud;
+    [SerializeField] private GameObject prefabBala;
 
     private void Update() {
         float movX = Input.GetAxis("Horizontal");
-        this.ani.SetFloat("mov_influence", Mathf.Abs(movX));
+        this.ani.SetFloat("influenciaMovimiento", Mathf.Abs(movX));
         this.ani.speed = ((this.rb.velocity.magnitude / this.velocidadMaxima) * 0.5f) + 0.5f;
         
         if (movX < -0.1f){
@@ -32,17 +25,17 @@ public class Personaje : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            Vector3 posicionBala = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            if (this.sr.flipX) {
+            Vector3 posicionDisparo = new Vector3(this.transform.localPosition.x + (this.sr.flipX ? -1 : 1), this.transform.localPosition.y - 0.3f, this.transform.localPosition.z);
+            GameObject proyectil = Instantiate(this.prefabBala, posicionDisparo, this.transform.rotation);
+            /*if (this.sr.flipX) {
                 posicionBala.x = posicionBala.x - 1.0f;
-                GameObject proyectil = Instantiate(this.prefabBala, posicionBala, this.transform.rotation);
                 proyectil.GetComponent<Rigidbody2D>().velocity = new Vector2(this.rb.velocity.x - this.velocidadBala, 0.0f);
-                proyectil.GetComponent<SpriteRenderer>().flipX = true;
             } else {
                 posicionBala.x = posicionBala.x + 1.0f;
-                GameObject disparo = Instantiate(this.prefabBala, posicionBala, this.transform.rotation);
-                disparo.GetComponent<Rigidbody2D>().velocity = new Vector2(rb.velocity.x + velocidadBala, 0.0f);
-            }
+            }*/
+            //posicionDisparo.x = posicionDisparo.x - ((this.rb.velocity.x + 1) / (1 + Mathf.Sqrt(this.rb.velocity.x * this.rb.velocity.x)));
+            proyectil.GetComponent<Rigidbody2D>().velocity = new Vector2(this.velocidadBala * (this.sr.flipX ? -1 : 1), 0.0f);
+            proyectil.GetComponent<SpriteRenderer>().flipX = this.sr.flipX;
         }
     }
 

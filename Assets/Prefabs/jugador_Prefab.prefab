@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5764734688219971851}
   m_Layer: 0
   m_Name: jugador_Prefab
-  m_TagString: Player
+  m_TagString: Jugador
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,9 +164,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236fb38f435e7954c974baadc853fc9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vida: 6
+  fuerzaMovimiento: 20
+  largoRaycast: 1.05
+  velocidadBala: 20
   velocidadMaxima: 6
   fuerzaSalto: 8
-  bala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
+  rb: {fileID: 2002861623042762474}
+  sr: {fileID: 5683096783900120633}
+  ani: {fileID: 8177754970193200380}
+  hud: {fileID: 0}
+  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
 --- !u!95 &8177754970193200380
 Animator:
   serializedVersion: 5
@@ -200,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e545e3d6569a64ab10d618e73ee684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
+  IDEscena: 0
 --- !u!1 &7753602193495824246
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +221,7 @@ GameObject:
   - component: {fileID: 776839293677595825}
   - component: {fileID: 3441444421462774421}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: camara
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,7 +236,7 @@ Transform:
   m_GameObject: {fileID: 7753602193495824246}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33472803, y: 0.4707113, z: -10}
+  m_LocalPosition: {x: 0, y: 0.45, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
