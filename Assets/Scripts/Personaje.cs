@@ -40,9 +40,9 @@ public class Personaje : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Physics2D.queriesHitTriggers = false; //?
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.up * -1.0f * this.rb.gravityScale, this.largoRaycast);
-        Physics2D.queriesHitTriggers = true; //?
+        //Physics2D.queriesHitTriggers = false; //?
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.down * this.rb.gravityScale, this.largoRaycast);
+        //Physics2D.queriesHitTriggers = true; //?
         bool parado = hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
         this.ani.SetBool("saltando", !parado);
 
@@ -70,7 +70,7 @@ public class Personaje : MonoBehaviour {
         if (this.vida > 1) {
             this.vida--;
             GameObject vidaHUD = this.hud.transform.GetChild(1).gameObject;
-            vidaHUD.GetComponent<RectTransform>().sizeDelta = new Vector2(50.0f * this.vida, 100.0f);
+            //hud.GetComponent<RectTransform>().sizeDelta = new Vector2(50.0f * this.vida, 100.0f);
         } else {
             this.GetComponent<ControlEscenas>().CambiarEscena();
         }

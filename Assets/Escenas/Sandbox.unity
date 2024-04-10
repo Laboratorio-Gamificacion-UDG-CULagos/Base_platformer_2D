@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 84963376}
   m_Layer: 6
   m_Name: Colisiones
-  m_TagString: Terrain
+  m_TagString: Plataforma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3905,6 +3905,22 @@ PrefabInstance:
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Size.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Size.y
+      value: 1.1555556
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.425
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

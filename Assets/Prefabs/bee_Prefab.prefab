@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beelocity: 2
   miraDerecha: 0
-  rb: {fileID: 0}
-  sr: {fileID: 0}
+  rb: {fileID: 6399810516046288147}
+  sr: {fileID: 6399810516046288145}
   posicionInicial: {x: 0, y: 0}
   distanciaMaxima: 10
