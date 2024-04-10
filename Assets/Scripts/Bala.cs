@@ -1,32 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bala : MonoBehaviour
-{
-    public Sprite impacto;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Nemico")
-        {
-            Destroy(collision.gameObject);
+public class Bala : MonoBehaviour {
+    public Sprite spriteImpacto;
+    private void OnCollisionEnter2D(Collision2D colisionado) {
+        if(colisionado.gameObject.tag == "Enemigo") {
+            Destroy(colisionado.gameObject);
         }
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        sr.sprite = impacto;
-        sr.flipX = !sr.flipX;
+        this.GetComponent<SpriteRenderer>().sprite = this.spriteImpacto;
+        this.GetComponent<SpriteRenderer>().flipX = !this.GetComponent<SpriteRenderer>().flipX;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        Destroy(gameObject, 0.1f);
+        Destroy(this.gameObject, 0.1f);
     }
 }

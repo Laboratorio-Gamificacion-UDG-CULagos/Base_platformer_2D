@@ -1,28 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ZonaMuerte : MonoBehaviour
-{
-    [SerializeField] int idEscena = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision != null  && collision.name == "Jugador")
-        {
-            SceneManager.LoadScene(idEscena);
+public class ZonaMuerte : MonoBehaviour {
+    [SerializeField] private int IDEscena = 0;
+    
+    private void OnTriggerEnter2D(Collider2D colisionado) {
+        if(colisionado.CompareTag("Jugador")) {
+            SceneManager.LoadScene(this.IDEscena);
         }
     }
 }

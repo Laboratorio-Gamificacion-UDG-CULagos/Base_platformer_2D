@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Nemico
   - Terrain
+  - Enemigo
+  - Plataforma
+  - Jugador
   layers:
   - Default
   - TransparentFX
