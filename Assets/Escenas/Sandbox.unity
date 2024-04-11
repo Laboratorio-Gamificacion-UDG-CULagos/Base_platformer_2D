@@ -197,7 +197,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 84963374}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0f7f9e42b292d0945b8db59882b91a1f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3868,11 +3868,11 @@ PrefabInstance:
       objectReference: {fileID: 1906606097}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.33472803
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4707113
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3905,22 +3905,6 @@ PrefabInstance:
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Size.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Size.y
-      value: 1.1555556
-      objectReference: {fileID: 0}
-    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7640721039283237355, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.425
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

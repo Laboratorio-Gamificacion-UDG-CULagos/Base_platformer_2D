@@ -49,16 +49,21 @@ public class Personaje : MonoBehaviour {
         if (this.rb.velocity.magnitude < this.velocidadMaxima) {
             float movimientoHorizontal = Input.GetAxis("Horizontal") * this.fuerzaMovimiento;
             if (!parado) {
-                movimientoHorizontal *= 0.2f;
+                movimientoHorizontal *= 0.3f;
             }
-            Vector2 movimiento = new Vector2(movimientoHorizontal, 0.0f);
-            this.rb.AddForce(movimiento);
+
+            this.rb.velocity = new Vector2(movimientoHorizontal, 0.0f) + this.rb.velocity;
+            //this.rb.AddForce(movimiento);
         }
     
-        if (Input.GetAxis("Vertical") > 0.2f && parado) {
+        if (Input.GetAxis("Vertical") > 0.1f && parado) {
             Vector2 salto = Vector2.up * this.fuerzaSalto;
-            this.rb.AddForce(salto, ForceMode2D.Impulse);
+
+            this.rb.velocity = new Vector2(this.rb.velocity.x, this.fuerzaSalto);
+            //this.rb.AddForce(salto, ForceMode2D.Impulse);
         }
+
+        //DEBUG
         if (Input.GetKeyDown(KeyCode.Space)) {
             Debug.Log(hit.collider.gameObject.name); //?
         };
