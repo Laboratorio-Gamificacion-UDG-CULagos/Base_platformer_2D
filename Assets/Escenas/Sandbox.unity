@@ -197,7 +197,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 84963374}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 0f7f9e42b292d0945b8db59882b91a1f, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3803,15 +3803,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2368664680722474920, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2368664680722474920, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 2368664680722474920, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.2690538
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2368664680722474920, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3841,6 +3841,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3551259828467867886, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
+      propertyPath: m_Size.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551259828467867886, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551259828467867886, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551259828467867886, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5334997093769922873, guid: f2e12b7165f3e73458a5631de9be7ffc, type: 3}
       propertyPath: m_Name
       value: ZonaMuerte
@@ -3862,17 +3878,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jugador
       objectReference: {fileID: 0}
+    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Size.x
+      value: 0.395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.42222223
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 5267087246649873038, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: hud
       value: 
-      objectReference: {fileID: 1906606097}
+      objectReference: {fileID: 1906606098}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.98
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.z

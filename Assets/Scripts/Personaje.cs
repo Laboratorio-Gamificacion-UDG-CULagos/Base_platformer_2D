@@ -1,3 +1,5 @@
+using System;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Personaje : MonoBehaviour {
@@ -13,7 +15,7 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Animator ani;
-    [SerializeField] private GameObject hud;
+    [SerializeField] private RectTransform hud;
     [SerializeField] private GameObject prefabBala;
 
     private void Update() {
@@ -41,20 +43,25 @@ public class Personaje : MonoBehaviour {
             proyectil.GetComponent<Rigidbody2D>().velocity = new Vector2(this.velocidadBala * (this.sr.flipX ? -1 : 1), 0.0f);
             proyectil.GetComponent<SpriteRenderer>().flipX = this.sr.flipX;
         }
+
+        //Debug.DrawRay(this.transform.position, this.rb.velocity, Color.red); //?
+
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            //Debug.Log(hit1.collider.gameObject.name); //?
+        };
+
     }
 
     private void FixedUpdate() {
-        //Physics2D.queriesHitTriggers = false; //?
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.down * this.rb.gravityScale, this.largoRaycast);
-        //Physics2D.queriesHitTriggers = true; //?
-        bool parado = hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
+        bool parado = DetectarPlataforma();
         this.ani.SetBool("saltando", !parado);
         if (this.rb.velocity.magnitude < this.velocidadMaxima) {
-            float movimientoHorizontal = parado ? this.inputX * this.fuerzaMovimiento : 0.0f;
+            float movimientoHorizontal = parado ? this.inputX * this.fuerzaMovimiento : this.inputX * this.fuerzaMovimiento / 10.0f;
             if (!parado) {
                 movimientoHorizontal *= 0.3f;
             }
-            Vector2 movTotal = Vector2.zero;
+            Vector2 movTotal;
             if (parado) {
                 movTotal = new Vector2(movimientoHorizontal + (this.rb.velocity.x * this.resistencia), this.rb.velocity.y);
             } else {
@@ -71,20 +78,40 @@ public class Personaje : MonoBehaviour {
             //this.rb.AddForce(salto, ForceMode2D.Impulse);
         }
 
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log(hit.collider.gameObject.name); //?
-        };
-        Debug.DrawRay(this.transform.position, -Vector2.up * this.largoRaycast, Color.blue); //?
-        Debug.DrawRay(this.transform.position, this.rb.velocity, Color.red); //?
+    }
+    private bool DetectarPlataforma() {
+        Vector3 offsetRayo = Vector3.left / 5;
+        Vector3 posRayo1 = this.transform.position - offsetRayo;
+        Vector3 posRayo2 = this.transform.position + offsetRayo;
+
+        bool tocaIzq = DetectarIzq(posRayo1);
+        bool tocaDer = DetectarDer(posRayo2);
+
+        return tocaIzq || tocaDer;
+    }
+
+    private bool DetectarIzq(Vector3 posRayo) {
+        //Physics2D.queriesHitTriggers = false; //?
+        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast);
+        //Physics2D.queriesHitTriggers = true; //?
+        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue); //?
+        return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
+    }
+
+    private bool DetectarDer(Vector3 posRayo) {
+        //Physics2D.queriesHitTriggers = false; //?
+        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast);
+        //Physics2D.queriesHitTriggers = true; //?
+        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue); //?
+        return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
     }
 
     public void Herir() {
         if (this.vida > 1) {
             this.vida--;
-            GameObject vidaHUD = this.hud.transform.gameObject;
-            //hud.GetComponent<RectTransform>().sizeDelta = new Vector2(50.0f * this.vida, 100.0f);
-        } else {
+            this.hud.sizeDelta = new Vector2(50.0f * this.vida, 100.0f);
+        }
+        else {
             this.GetComponent<ControlEscenas>().CambiarEscena();
         }
     }

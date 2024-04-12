@@ -113,9 +113,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &5260080338456408765
 BoxCollider2D:
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.45}
+  m_Offset: {x: 0, y: -0.47}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -160,8 +160,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.1}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.395, y: 1}
+  m_EdgeRadius: 0.025
 --- !u!114 &5267087246649873038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,9 +178,11 @@ MonoBehaviour:
   fuerzaMovimiento: 0.9
   largoRaycast: 1.05
   velocidadBala: 20
-  velocidadMaxima: 10
+  velocidadMaxima: 15
   fuerzaSalto: 12.5
   resistencia: 0.85
+  beelX: 0
+  inputX: 0
   rb: {fileID: 2002861623042762474}
   sr: {fileID: 5683096783900120633}
   ani: {fileID: 8177754970193200380}
