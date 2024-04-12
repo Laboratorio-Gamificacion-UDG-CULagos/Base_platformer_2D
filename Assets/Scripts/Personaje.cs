@@ -7,6 +7,9 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private float velocidadBala = 20.0f;
     [SerializeField] private float velocidadMaxima = 6.0f;
     [SerializeField] private float fuerzaSalto = 8.0f;
+    [SerializeField] private float resistencia = 1.0f;
+    [SerializeField] private float beelX;
+    [SerializeField] private float inputX;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Animator ani;
@@ -14,13 +17,14 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private GameObject prefabBala;
 
     private void Update() {
-        float movX = Input.GetAxis("Horizontal");
-        this.ani.SetFloat("influenciaMovimiento", Mathf.Abs(movX));
-        this.ani.speed = ((this.rb.velocity.magnitude / this.velocidadMaxima) * 0.5f) + 0.5f;
+        this.inputX = Input.GetAxis("Horizontal");
+        this.beelX = Mathf.Sqrt(this.rb.velocity.x * this.rb.velocity.x);
+        this.ani.SetFloat("influenciaMovimiento", this.beelX);
+        this.ani.speed = (this.rb.velocity.magnitude / this.velocidadMaxima * 0.5f) + 0.5f;
         
-        if (movX < -0.1f){
+        if (this.rb.velocity.x < -0.1f){
             this.sr.flipX = true;
-        } else if (movX > 0.1f) {
+        } else if (this.rb.velocity.x > 0.1f) {
             this.sr.flipX = false;
         }
 
@@ -45,18 +49,22 @@ public class Personaje : MonoBehaviour {
         //Physics2D.queriesHitTriggers = true; //?
         bool parado = hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
         this.ani.SetBool("saltando", !parado);
-
         if (this.rb.velocity.magnitude < this.velocidadMaxima) {
-            float movimientoHorizontal = Input.GetAxis("Horizontal") * this.fuerzaMovimiento;
+            float movimientoHorizontal = parado ? this.inputX * this.fuerzaMovimiento : 0.0f;
             if (!parado) {
                 movimientoHorizontal *= 0.3f;
             }
-
-            this.rb.velocity = new Vector2(movimientoHorizontal, 0.0f) + this.rb.velocity;
+            Vector2 movTotal = Vector2.zero;
+            if (parado) {
+                movTotal = new Vector2(movimientoHorizontal + (this.rb.velocity.x * this.resistencia), this.rb.velocity.y);
+            } else {
+                movTotal = new Vector2(movimientoHorizontal + this.rb.velocity.x, this.rb.velocity.y);
+            }
+            this.rb.velocity = movTotal;
             //this.rb.AddForce(movimiento);
         }
     
-        if (Input.GetAxis("Vertical") > 0.1f && parado) {
+        if (Input.GetAxis("Vertical") > 0.05f && parado) {
             Vector2 salto = Vector2.up * this.fuerzaSalto;
 
             this.rb.velocity = new Vector2(this.rb.velocity.x, this.fuerzaSalto);
@@ -74,7 +82,7 @@ public class Personaje : MonoBehaviour {
     public void Herir() {
         if (this.vida > 1) {
             this.vida--;
-            GameObject vidaHUD = this.hud.transform.GetChild(1).gameObject;
+            GameObject vidaHUD = this.hud.transform.gameObject;
             //hud.GetComponent<RectTransform>().sizeDelta = new Vector2(50.0f * this.vida, 100.0f);
         } else {
             this.GetComponent<ControlEscenas>().CambiarEscena();
