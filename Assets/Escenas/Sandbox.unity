@@ -3878,22 +3878,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jugador
       objectReference: {fileID: 0}
-    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Size.x
-      value: 0.395
-      objectReference: {fileID: 0}
-    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.42222223
-      objectReference: {fileID: 0}
-    - target: {fileID: 5260080338456408765, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
-      propertyPath: m_EdgeRadius
-      value: 0.025
-      objectReference: {fileID: 0}
     - target: {fileID: 5267087246649873038, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: hud
       value: 

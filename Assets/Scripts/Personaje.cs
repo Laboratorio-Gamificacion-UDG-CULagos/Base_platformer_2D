@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Personaje : MonoBehaviour {
     [SerializeField] private int vida = 6;
-    [SerializeField] private float fuerzaMovimiento = 20.0f;
+    [SerializeField] private float fuerzaMovimiento = 0.9f;
     [SerializeField] private float largoRaycast = 1.05f;
     [SerializeField] private float velocidadBala = 20.0f;
-    [SerializeField] private float velocidadMaxima = 6.0f;
-    [SerializeField] private float fuerzaSalto = 8.0f;
-    [SerializeField] private float resistencia = 1.0f;
-    [SerializeField] private float beelX;
-    [SerializeField] private float inputX;
+    [SerializeField] private float velocidadMaxima = 15.0f;
+    [SerializeField] private float fuerzaSalto = 10.0f;
+    [SerializeField] private float resistencia = 0.85f;
+    [SerializeField] private float beelX = 0.0f;
+    [SerializeField] private float inputX = 0.0f;
+    [SerializeField] private float airTime = 0.0f;
+    [SerializeField] private float coyoteTime = 0.1f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Animator ani;
@@ -50,35 +52,31 @@ public class Personaje : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             //Debug.Log(hit1.collider.gameObject.name); //?
         };
-
     }
 
     private void FixedUpdate() {
         bool parado = DetectarPlataforma();
-        this.ani.SetBool("saltando", !parado);
+        this.airTime = parado ? 0.0f : this.airTime + Time.deltaTime;
+        this.ani.SetBool("saltando", this.airTime >= this.coyoteTime);
+        if (Input.GetAxis("Vertical") > 0.05f && !this.ani.GetBool("saltando")) {
+            this.rb.velocity = new Vector2(this.rb.velocity.x, this.fuerzaSalto);
+            //this.rb.AddForce(salto, ForceMode2D.Impulse);
+        }
+
         if (this.rb.velocity.magnitude < this.velocidadMaxima) {
             float movimientoHorizontal = parado ? this.inputX * this.fuerzaMovimiento : this.inputX * this.fuerzaMovimiento / 10.0f;
-            if (!parado) {
-                movimientoHorizontal *= 0.3f;
-            }
             Vector2 movTotal;
             if (parado) {
                 movTotal = new Vector2(movimientoHorizontal + (this.rb.velocity.x * this.resistencia), this.rb.velocity.y);
             } else {
+                movimientoHorizontal *= 0.3f;
                 movTotal = new Vector2(movimientoHorizontal + this.rb.velocity.x, this.rb.velocity.y);
             }
             this.rb.velocity = movTotal;
             //this.rb.AddForce(movimiento);
         }
-    
-        if (Input.GetAxis("Vertical") > 0.05f && parado) {
-            Vector2 salto = Vector2.up * this.fuerzaSalto;
-
-            this.rb.velocity = new Vector2(this.rb.velocity.x, this.fuerzaSalto);
-            //this.rb.AddForce(salto, ForceMode2D.Impulse);
-        }
-
     }
+
     private bool DetectarPlataforma() {
         Vector3 offsetRayo = Vector3.left / 5;
         Vector3 posRayo1 = this.transform.position - offsetRayo;

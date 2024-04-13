@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5683096783900120633}
   - component: {fileID: 2002861623042762474}
   - component: {fileID: 5260080338456408765}
-  - component: {fileID: 5267087246649873038}
   - component: {fileID: 8177754970193200380}
+  - component: {fileID: 5267087246649873038}
   - component: {fileID: 5764734688219971851}
   m_Layer: 0
   m_Name: jugador_Prefab
@@ -162,32 +162,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.395, y: 1}
   m_EdgeRadius: 0.025
---- !u!114 &5267087246649873038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4736797841714205009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 236fb38f435e7954c974baadc853fc9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vida: 6
-  fuerzaMovimiento: 0.9
-  largoRaycast: 1.05
-  velocidadBala: 20
-  velocidadMaxima: 15
-  fuerzaSalto: 12.5
-  resistencia: 0.85
-  beelX: 0
-  inputX: 0
-  rb: {fileID: 2002861623042762474}
-  sr: {fileID: 5683096783900120633}
-  ani: {fileID: 8177754970193200380}
-  hud: {fileID: 0}
-  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
 --- !u!95 &8177754970193200380
 Animator:
   serializedVersion: 5
@@ -209,6 +183,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5267087246649873038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736797841714205009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236fb38f435e7954c974baadc853fc9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 6
+  fuerzaMovimiento: 0.9
+  largoRaycast: 1.05
+  velocidadBala: 20
+  velocidadMaxima: 15
+  fuerzaSalto: 10
+  resistencia: 0.85
+  beelX: 0
+  inputX: 0
+  airTime: 0
+  coyoteTime: 0.1
+  rb: {fileID: 2002861623042762474}
+  sr: {fileID: 5683096783900120633}
+  ani: {fileID: 8177754970193200380}
+  hud: {fileID: 0}
+  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
 --- !u!114 &5764734688219971851
 MonoBehaviour:
   m_ObjectHideFlags: 0
