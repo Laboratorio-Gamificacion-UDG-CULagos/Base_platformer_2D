@@ -26,9 +26,9 @@ public class Personaje : MonoBehaviour {
         this.ani.SetFloat("influenciaMovimiento", this.beelX);
         this.ani.speed = (this.rb.velocity.magnitude / this.velocidadMaxima * 0.5f) + 0.5f;
         
-        if (this.rb.velocity.x < -0.1f){
+        if (this.rb.velocity.x < -0.15f){
             this.sr.flipX = true;
-        } else if (this.rb.velocity.x > 0.1f) {
+        } else if (this.rb.velocity.x > 0.15f) {
             this.sr.flipX = false;
         }
 
@@ -74,7 +74,21 @@ public class Personaje : MonoBehaviour {
             }
             this.rb.velocity = movTotal;
             //this.rb.AddForce(movimiento);
+
+            if (!parado && this.rb.velocity.y < 0.0f) {
+                if ((this.rb.velocity.x < 0.0f && DetectarPared(-1)) || (this.rb.velocity.x > 0.0f && DetectarPared(1))) {
+                    this.rb.velocity = new Vector3(0.0f, this.rb.velocity.y / 2.0f);
+                }
+            }
         }
+    }
+
+    private bool DetectarPared(int direccion) {
+        //Physics2D.queriesHitTriggers = false; //?
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right * direccion, 0.3f);
+        //Physics2D.queriesHitTriggers = true; //?
+        Debug.DrawRay(this.transform.position, Vector2.right * direccion * 0.3f, Color.red); //?
+        return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
     }
 
     private bool DetectarPlataforma() {
