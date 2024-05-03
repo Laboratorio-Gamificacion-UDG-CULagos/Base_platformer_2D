@@ -4,10 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Terrain
   - Enemigo
   - Plataforma
   - Jugador
+  - Proyectil
+  - Nemico
+  - Objeto
+  - Peligro
+  - Interactuable
   layers:
   - Default
   - TransparentFX

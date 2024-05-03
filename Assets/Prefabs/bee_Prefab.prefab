@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6399810516046288149}
   m_Layer: 7
   m_Name: bee_Prefab
-  m_TagString: Nemico
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,3 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cb4e57fa10a314d8d7a14b19a40478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beelocity: 2
+  miraDerecha: 0
+  rb: {fileID: 6399810516046288147}
+  sr: {fileID: 6399810516046288145}
+  posicionInicial: {x: 0, y: 0}
+  distanciaMaxima: 10
