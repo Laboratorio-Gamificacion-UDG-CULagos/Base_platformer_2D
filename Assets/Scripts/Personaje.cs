@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class Personaje : MonoBehaviour {
     //Variables de funcionamiento
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
-    private Animator ani;
-    private RectTransform hud;
-    private GameObject prefabBala;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private Animator ani;
+    [SerializeField] private RectTransform hud;
+    [SerializeField] private GameObject prefabBala;
 
     //Variables de personalización
     [SerializeField] private bool movimientoAereo = false;
+    [SerializeField] private bool saltoEnPared = false;
     [SerializeField] private int vida = 6;
     [SerializeField] private float fuerzaMovimiento = 0.9f;
-    [SerializeField] private float largoRaycast = 1.05f;
+    [SerializeField] private float largoRaycast = 0.55f;
     [SerializeField] private float velocidadBala = 20.0f;
     [SerializeField] private float velocidadMaxima = 15.0f;
     [SerializeField] private float fuerzaSalto = 10.0f;
@@ -31,9 +32,9 @@ public class Personaje : MonoBehaviour {
         this.ani.speed = (this.rb.velocity.magnitude / this.velocidadMaxima * 0.5f) + 0.5f;
         
         //Cambiar dirección
-        if (this.rb.velocity.x < -0.15f){
+        if (this.rb.velocity.x < -0.25f){
             this.sr.flipX = true;
-        } else if (this.rb.velocity.x > 0.15f) {
+        } else if (this.rb.velocity.x > 0.25f) {
             this.sr.flipX = false;
         }
 
@@ -70,13 +71,14 @@ public class Personaje : MonoBehaviour {
         this.ani.SetBool("saltando", this.airTime >= this.coyoteTime);
 
         //Salto
-        if (Input.GetAxis("Vertical") > 0.05f && !this.ani.GetBool("saltando")) {
+        if (Input.GetAxis("Vertical") > 0.05f && (!this.ani.GetBool("saltando") || (this.rb.velocity.y < -0.05f && saltoEnPared && (DetectarPared(-1) || DetectarPared(1))))) {
+            if (saltoEnPared && (DetectarPared(-1) || DetectarPared(1)) && this.rb.velocity.y < -0.05f) this.rb.velocity += Vector2.right * (this.sr.flipX? 5 : -5);
             this.rb.velocity = new Vector2(this.rb.velocity.x, this.fuerzaSalto);
             //this.rb.AddForce(salto, ForceMode2D.Impulse);
         }
 
         //Movimiento lateral
-        if (this.rb.velocity.magnitude < this.velocidadMaxima) {
+        if (Mathf.Sqrt(Mathf.Pow(this.rb.velocity.x, 2)) < this.velocidadMaxima) {
             //Calcular velocidades
             float movimientoHorizontal = (parado || movimientoAereo) ? this.inputX * this.fuerzaMovimiento : this.inputX * this.fuerzaMovimiento / 10.0f;
             Vector2 movTotal;
@@ -94,26 +96,31 @@ public class Personaje : MonoBehaviour {
 
             //Deslizamiento por pared
             if (!parado && this.rb.velocity.y < 0.0f) {
-                if ((this.rb.velocity.x < 0.0f && DetectarPared(-1)) || (this.rb.velocity.x > 0.0f && DetectarPared(1))) {
-                    this.rb.velocity = new Vector3(0.0f, this.rb.velocity.y / 2.0f);
+                if ((this.rb.velocity.x < -0.01f && DetectarPared(-1)) || (this.rb.velocity.x > 0.01f && DetectarPared(1))) {
+                    this.rb.velocity = new Vector2(this.rb.velocity.x, this.rb.velocity.y / 2.0f);
                 }
             }
         }
+
+        float newX = Mathf.Clamp(this.rb.velocity.x, -this.velocidadMaxima, this.velocidadMaxima);
+        float newY = Mathf.Clamp(this.rb.velocity.y, -this.velocidadMaxima * 5, this.velocidadMaxima * 5);
+        this.rb.velocity = new Vector2(newX, newY);
     }
 
     private bool DetectarPared(int direccion) {
         //Deteccion con raycast de paredes cercanas
         //Physics2D.queriesHitTriggers = false;
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right * direccion, 0.3f);
+        Vector2 origenRaycast = new Vector2(this.transform.position.x + (direccion * 0.16f), this.transform.position.y);
+        RaycastHit2D hit = Physics2D.Raycast(origenRaycast + (Vector2.down / 2), Vector2.right * direccion, 0.1f);
         //Physics2D.queriesHitTriggers = true; //?
-        Debug.DrawRay(this.transform.position, Vector2.right * direccion * 0.3f, Color.red); //?
+        Debug.DrawRay(origenRaycast + (Vector2.down / 2), Vector2.right * direccion * 0.1f, Color.red);
         return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
     }
 
     private bool DetectarPlataforma() {
-        Vector3 offsetRayo = Vector3.left / 6;
-        Vector3 posRayo1 = this.transform.position - offsetRayo;
-        Vector3 posRayo2 = this.transform.position + offsetRayo;
+        Vector3 offsetRayo = Vector3.left / 5;
+        Vector3 posRayo1 = this.transform.position - offsetRayo + (Vector3.down / 2);
+        Vector3 posRayo2 = this.transform.position + offsetRayo + (Vector3.down / 2);
 
         bool tocaIzq = DetectarIzq(posRayo1);
         bool tocaDer = DetectarDer(posRayo2);
@@ -125,7 +132,7 @@ public class Personaje : MonoBehaviour {
         //Physics2D.queriesHitTriggers = false; //?
         RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast);
         //Physics2D.queriesHitTriggers = true; //?
-        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue); //?
+        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue);
         return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
     }
 

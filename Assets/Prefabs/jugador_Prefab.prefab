@@ -102,7 +102,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 2
@@ -114,8 +114,8 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5260080338456408765
 BoxCollider2D:
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.47}
+  m_Offset: {x: 0, y: -0.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -160,8 +160,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.395, y: 1}
-  m_EdgeRadius: 0.025
+  m_Size: {x: 0.35, y: 0.8}
+  m_EdgeRadius: 0.055
 --- !u!95 &8177754970193200380
 Animator:
   serializedVersion: 5
@@ -195,22 +195,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236fb38f435e7954c974baadc853fc9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 2002861623042762474}
+  sr: {fileID: 5683096783900120633}
+  ani: {fileID: 8177754970193200380}
+  hud: {fileID: 0}
+  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
+  movimientoAereo: 0
+  saltoEnPared: 0
   vida: 6
-  fuerzaMovimiento: 0.9
-  largoRaycast: 1.05
+  fuerzaMovimiento: 1
+  largoRaycast: 0.55
   velocidadBala: 20
-  velocidadMaxima: 15
+  velocidadMaxima: 5
   fuerzaSalto: 10
   resistencia: 0.85
   beelX: 0
   inputX: 0
   airTime: 0
   coyoteTime: 0.1
-  rb: {fileID: 2002861623042762474}
-  sr: {fileID: 5683096783900120633}
-  ani: {fileID: 8177754970193200380}
-  hud: {fileID: 0}
-  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
 --- !u!114 &5764734688219971851
 MonoBehaviour:
   m_ObjectHideFlags: 0
