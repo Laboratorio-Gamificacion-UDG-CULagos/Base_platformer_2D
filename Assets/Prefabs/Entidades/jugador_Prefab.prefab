@@ -114,7 +114,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5260080338456408765
@@ -200,8 +200,15 @@ MonoBehaviour:
   ani: {fileID: 8177754970193200380}
   hud: {fileID: 0}
   prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
-  movimientoAereo: 0
-  saltoEnPared: 0
+  pisables:
+    serializedVersion: 2
+    m_Bits: 73
+  plataformas:
+    serializedVersion: 2
+    m_Bits: 8
+  moverConPlataformas: 1
+  movimientoAereo: 1
+  saltoEnPared: 1
   vida: 6
   fuerzaMovimiento: 1
   largoRaycast: 0.55

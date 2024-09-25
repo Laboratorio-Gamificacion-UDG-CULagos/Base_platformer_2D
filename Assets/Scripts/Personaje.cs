@@ -7,8 +7,11 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private Animator ani;
     [SerializeField] private RectTransform hud;
     [SerializeField] private GameObject prefabBala;
+    public LayerMask pisables;
+    public LayerMask plataformas;
 
     //Variables de personalización
+    [SerializeField] private bool moverConPlataformas = true;
     [SerializeField] private bool movimientoAereo = false;
     [SerializeField] private bool saltoEnPared = false;
     [SerializeField] private int vida = 6;
@@ -105,13 +108,29 @@ public class Personaje : MonoBehaviour {
         float newX = Mathf.Clamp(this.rb.velocity.x, -this.velocidadMaxima, this.velocidadMaxima);
         float newY = Mathf.Clamp(this.rb.velocity.y, -this.velocidadMaxima * 5, this.velocidadMaxima * 5);
         this.rb.velocity = new Vector2(newX, newY);
+
+        //Checar por plataformas debajo para moverse
+        if(moverConPlataformas) {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down/2, Vector2.down, this.largoRaycast, plataformas);
+            Debug.DrawRay(transform.position + Vector3.down/2, Vector2.down * this.largoRaycast, Color.green);
+            if (hit.collider != null) {
+                Rigidbody2D rbPlataforma = hit.collider.GetComponent<Rigidbody2D>();
+                if (rbPlataforma != null)
+                {
+                    //Sumar la velocidad de la plataforma en movimiento
+                    Vector2 velocidadPlataforma = rbPlataforma.velocity;
+                    Vector2 nuevaVelocidad = velocidadPlataforma;
+                    GetComponent<Rigidbody2D>().velocity += nuevaVelocidad /6.666f;
+                }
+            }
+        }
     }
 
     private bool DetectarPared(int direccion) {
         //Deteccion con raycast de paredes cercanas
         //Physics2D.queriesHitTriggers = false;
         Vector2 origenRaycast = new Vector2(this.transform.position.x + (direccion * 0.16f), this.transform.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(origenRaycast + (Vector2.down / 2), Vector2.right * direccion, 0.1f);
+        RaycastHit2D hit = Physics2D.Raycast(origenRaycast + (Vector2.down / 2), Vector2.right * direccion, 0.1f, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(origenRaycast + (Vector2.down / 2), Vector2.right * direccion * 0.1f, Color.red);
         return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
@@ -130,7 +149,7 @@ public class Personaje : MonoBehaviour {
 
     private bool DetectarIzq(Vector3 posRayo) {
         //Physics2D.queriesHitTriggers = false; //?
-        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast);
+        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue);
         return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
@@ -138,7 +157,7 @@ public class Personaje : MonoBehaviour {
 
     private bool DetectarDer(Vector3 posRayo) {
         //Physics2D.queriesHitTriggers = false; //?
-        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast);
+        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue); //?
         return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
