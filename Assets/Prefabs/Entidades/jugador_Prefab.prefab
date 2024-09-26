@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8177754970193200380}
   - component: {fileID: 5267087246649873038}
   - component: {fileID: 5764734688219971851}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: jugador_Prefab
   m_TagString: Jugador
   m_Icon: {fileID: 0}
@@ -206,6 +206,7 @@ MonoBehaviour:
   plataformas:
     serializedVersion: 2
     m_Bits: 8
+  parado: 0
   moverConPlataformas: 1
   movimientoAereo: 1
   saltoEnPared: 1
