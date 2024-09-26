@@ -2,30 +2,44 @@ using UnityEngine;
 
 public class Personaje : MonoBehaviour {
     //Variables de funcionamiento
+    [Header("DEV: Variables de control")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Animator ani;
-    [SerializeField] private RectTransform hud;
-    [SerializeField] private GameObject prefabBala;
-    public LayerMask pisables;
-    public LayerMask plataformas;
-
-    //Variables de personalización
-    [SerializeField] private bool parado = false;
-    [SerializeField] private bool moverConPlataformas = true;
-    [SerializeField] private bool movimientoAereo = false;
-    [SerializeField] private bool saltoEnPared = false;
-    [SerializeField] private int vida = 6;
-    [SerializeField] private float fuerzaMovimiento = 0.9f;
-    [SerializeField] private float largoRaycast = 0.55f;
-    [SerializeField] private float velocidadBala = 20.0f;
-    [SerializeField] private float velocidadMaxima = 15.0f;
-    [SerializeField] private float fuerzaSalto = 10.0f;
-    [SerializeField] private float resistencia = 0.85f;
+    [SerializeField] private RectTransform hud; // PENDIENTE
+    [SerializeField] private GameObject prefabBala; // PENDIENTE
+    [SerializeField] private float velocidadBala = 20.0f; // PENDIENTE
     [SerializeField] private float beelX = 0.0f;
     [SerializeField] private float inputX = 0.0f;
     [SerializeField] private float airTime = 0.0f;
+    [SerializeField] private bool parado = false;
+
+    //Variables de personalización
+    [Header("Configuración del jugador")]
+    [Tooltip("Asigna tiempo en aire permitido para saltar")]
     [SerializeField] private float coyoteTime = 0.1f;
+    [Tooltip("Establece si es arrastrado por plataformas")]
+    [SerializeField] private bool moverConPlataformas = true;
+    [Tooltip("Permite movimiento al estar en el aire")]
+    [SerializeField] private bool movimientoAereo = false;
+    [Tooltip("Habilita si puede realizar saltos en la pared")]
+    [SerializeField] private bool saltoEnPared = false;
+    [Tooltip("Limita de vida base del personaje")]
+    [SerializeField] private int vida = 6; // PENDIENTE
+    [Tooltip("Asigna una fuerza para movimiento horizontal")]
+    [SerializeField] private float fuerzaMovimiento = 0.9f;
+    [Tooltip("Asigna una velocidad máxima para movimiento")]
+    [SerializeField] private float velocidadMaxima = 15.0f;
+    [Tooltip("Asigna una fuerza para saltar")]
+    [SerializeField] private float fuerzaSalto = 10.0f;
+    [Tooltip("Establece un multiplicador al movimiento sobre superficies")]
+    [SerializeField] private float resistencia = 0.85f;
+    [Tooltip("Establece capas de superficies que permiten la interacción para caminar")]
+    [SerializeField] private LayerMask pisables;
+    [Tooltip("Establece capas de tipos de plataformas")]
+    [SerializeField] private LayerMask plataformas;
+    [Tooltip("Asigna un rango de detección de superficies para caminado")]
+    [SerializeField] private float largoRaycast = 0.55f;
 
 
     private void Update() {
@@ -113,7 +127,7 @@ public class Personaje : MonoBehaviour {
         this.rb.velocity = new Vector2(newX, newY);
 
         //Checar por plataformas debajo para moverse
-        if(moverConPlataformas) {
+        if(moverConPlataformas && rb.velocity.y <= 0.05f) {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down/2, Vector2.down, this.largoRaycast, plataformas);
             Debug.DrawRay(transform.position + Vector3.down/2, Vector2.down * this.largoRaycast, Color.green);
             if (hit.collider != null) {

@@ -192,13 +192,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   esEstatica: 0
-  velocidad: 2
-  distancia: 10
+  velocidad: 1
+  distancia: 5
   tiempoDeCambio: 5
-  moviendoDerecha: 0
+  moviendoDerecha: 1
   cambiarPorTiempo: 0
   cambiarPorDistancia: 1
   colisiones:
     serializedVersion: 2
     m_Bits: 72
-  usarEffector: 1
+  unidireccional: 1

@@ -4,25 +4,22 @@ using UnityEngine;
 public class Portal : MonoBehaviour {
     [Header("Configuración del Portal")]
     [Tooltip("Define si el portal está activo o no")]
-    public bool activo = true;
-
+    [SerializeField] private bool activo = true;
     [Tooltip("Arrastra un portal de salida")]
-    public Portal portalSalida;
+    [SerializeField] private Portal portalSalida;
     [Tooltip("Añade un multiplicador de lanzamiento (redirección)")]
-    public float multiplicadorInercia = 1.0f;
+    [SerializeField] private float multiplicadorInercia = 1.0f;
     [Tooltip("Añade un ángulo de lanzamiento (redirección)")]
     [Range(0, 359)]
-    public int angulo = 0;
-
+    [SerializeField] private int angulo = 0;
     [Tooltip("Define si se conserva la inercia tras teletransportarse")]
-    public bool conservarInercia = true;
-    [Tooltip("Elige si debe redirigir tras teletransportar")]
-    public bool redirigir = false;
-
+    [SerializeField] private bool conservarInercia = true;
+    [Tooltip("Elige si debe redirigir tras teletransportar (requiere inercia)")]
+    [SerializeField] private bool redirigir = false;
     [Tooltip("Tiempo de espera (en segundos) para reutilizar el portal")]
-    public float tiempoEspera = 1.0f;
-    private bool enEspera = false;
+    [SerializeField] private float tiempoEspera = 1.0f;
 
+    private bool enEspera = false;
     private Rigidbody2D rbJugador;
 
     private void OnTriggerEnter2D(Collider2D collision) {

@@ -1,25 +1,33 @@
 using UnityEngine;
 
-public class Plataforma : MonoBehaviour
-{
-    [Header("Movimiento y parámetros")]
-    public bool esEstatica = true;
-    public float velocidad = 1f;
-    public float distancia = 10f;
-    public float tiempoDeCambio = 5f;
-    public bool moviendoDerecha = true;
+public class Plataforma : MonoBehaviour {
+    [Header("Configuración de la plataforma")]
+    [Tooltip("Define si la plataforma se mueve o no")]
+    [SerializeField] private bool esEstatica = true;
+    [Tooltip("Especifica la velocidad(no estática)")]
+    [SerializeField] private float velocidad = 1f;
+    [Tooltip("Establece la distancia maxima de recorrido")]
+    [SerializeField] private float distancia = 10f;
+    [Tooltip("Establece el tiempo hasta final de recorrido")]
+    [SerializeField] private float tiempoDeCambio = 5f;
+    [Tooltip("Establecer dirección de movimiento")]
+    [SerializeField] private bool moviendoDerecha = true;
     private float tiempoActual;
     private float distanciaRecorrida;
     private Vector3 posicionInicial;
     private Rigidbody2D rbPlataforma;
 
     [Header("Cambios de dirección")]
-    public bool cambiarPorTiempo = true;
-    public bool cambiarPorDistancia = false;
-    public LayerMask colisiones;
+    [Tooltip("Permitir redirección por tiempo")]
+    [SerializeField] private bool cambiarPorTiempo = true;
+    [Tooltip("Permitir redirección por distancia")]
+    [SerializeField] private bool cambiarPorDistancia = false;
+    [Tooltip("Asignar capas de redirección por colisión")]
+    [SerializeField] private LayerMask colisiones;
 
     [Header("Interacción con Jugador")]
-    public bool usarEffector = false;
+    [Tooltip("Establecer direccionalidad")]
+    [SerializeField] private bool unidireccional = false;
     private PlatformEffector2D effector;
 
     private void Awake() {
@@ -36,7 +44,7 @@ public class Plataforma : MonoBehaviour
         if (!esEstatica) MoverPlataforma();
 
         //Actualizar funcion del usuario
-        if (effector) effector.enabled = usarEffector;
+        if (effector) effector.enabled = unidireccional;
 
         //Mostramos en el Editor los Rays
         Debug.DrawRay(transform.position, Vector2.left * 0.5f * GetComponent<SpriteRenderer>().size.x  * (moviendoDerecha ? -1 : 1), Color.red);
