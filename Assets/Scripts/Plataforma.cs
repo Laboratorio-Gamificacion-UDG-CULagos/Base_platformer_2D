@@ -16,7 +16,7 @@ public class Plataforma : MonoBehaviour
     [Header("Cambios de dirección")]
     public bool cambiarPorTiempo = true;
     public bool cambiarPorDistancia = false;
-    public bool cambiarPorColision = true;
+    public LayerMask colisiones;
 
     [Header("Interacción con Jugador")]
     public bool usarEffector = false;
@@ -33,10 +33,24 @@ public class Plataforma : MonoBehaviour
 
     private void Update() {
         //Comportamiento base
-        if (esEstatica) MoverPlataforma();
+        if (!esEstatica) MoverPlataforma();
 
         //Actualizar funcion del usuario
         if (effector) effector.enabled = usarEffector;
+
+        //Mostramos en el Editor los Rays
+        Debug.DrawRay(transform.position, Vector2.left * 0.5f * GetComponent<SpriteRenderer>().size.x  * (moviendoDerecha ? -1 : 1), Color.red);
+
+        // Detectar si hay un muro a la izquierda o a la derecha
+        bool hayMuro = DetectarMuro(moviendoDerecha ? -1 : 1);
+        //Al tocar algo invertir el movimiento
+        if (hayMuro) CambiarDireccion();
+    }
+
+    bool DetectarMuro(int dir) {
+        //Raycasteamos para detectar un muro en la direccion que avanza
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left * dir, 0.5f * GetComponent<SpriteRenderer>().size.x, colisiones);
+        return hit.collider != null;
     }
 
     private void MoverPlataforma() {
@@ -65,12 +79,5 @@ public class Plataforma : MonoBehaviour
         moviendoDerecha = !moviendoDerecha;
         tiempoActual = tiempoDeCambio;
         distanciaRecorrida = 0f;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) {
-        //Cambiar direccion al chocar con otras plataformas
-        if (cambiarPorColision && collision.gameObject.CompareTag("Plataforma")) {
-            CambiarDireccion();
-        }
     }
 }

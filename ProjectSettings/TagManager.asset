@@ -5,13 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemigo
-  - Plataforma
   - Jugador
   - Proyectil
   - Nemico
   - Objeto
   - Peligro
   - Interactuable
+  - Pisos
   layers:
   - Default
   - TransparentFX
@@ -20,9 +20,9 @@ TagManager:
   - Water
   - UI
   - Piso
-  - Enemigos
-  - 
-  - 
+  - Entidades
+  - Portal
+  - Recolectable
   - 
   - 
   - 

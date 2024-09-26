@@ -11,6 +11,7 @@ public class Personaje : MonoBehaviour {
     public LayerMask plataformas;
 
     //Variables de personalización
+    [SerializeField] private bool parado = false;
     [SerializeField] private bool moverConPlataformas = true;
     [SerializeField] private bool movimientoAereo = false;
     [SerializeField] private bool saltoEnPared = false;
@@ -26,7 +27,11 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private float airTime = 0.0f;
     [SerializeField] private float coyoteTime = 0.1f;
 
+
     private void Update() {
+        //Detección de piso
+        parado = DetectarPlataforma();
+
         //Deteccion de pulsación horizontal del usuario
         this.inputX = Input.GetAxis("Horizontal");
         //Animar según velocidad horizontal
@@ -68,8 +73,6 @@ public class Personaje : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        //Detección de piso
-        bool parado = DetectarPlataforma();
         this.airTime = parado ? 0.0f : this.airTime + Time.deltaTime;
         this.ani.SetBool("saltando", this.airTime >= this.coyoteTime);
 
@@ -133,7 +136,7 @@ public class Personaje : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(origenRaycast + (Vector2.down / 2), Vector2.right * direccion, 0.1f, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(origenRaycast + (Vector2.down / 2), Vector2.right * direccion * 0.1f, Color.red);
-        return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
+        return hit.collider != null;
     }
 
     private bool DetectarPlataforma() {
@@ -152,7 +155,7 @@ public class Personaje : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue);
-        return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
+        return hit.collider != null && rb.velocity.y <= 0.1f;
     }
 
     private bool DetectarDer(Vector3 posRayo) {
@@ -160,7 +163,7 @@ public class Personaje : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue); //?
-        return hit.collider != null && hit.collider.gameObject.CompareTag("Plataforma");
+        return hit.collider != null && rb.velocity.y <= 0.1f;
     }
 
     public void Herir() {
