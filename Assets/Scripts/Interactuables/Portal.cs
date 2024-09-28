@@ -1,10 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class Portal : MonoBehaviour {
+public class Portal : Interactuable {
     [Header("Configuración del Portal")]
-    [Tooltip("Define si el portal está activo o no")]
-    [SerializeField] private bool activo = true;
     [Tooltip("Arrastra un portal de salida")]
     [SerializeField] private Portal portalSalida;
     [Tooltip("Añade un multiplicador de lanzamiento (redirección)")]
@@ -12,7 +10,7 @@ public class Portal : MonoBehaviour {
     [Tooltip("Añade un ángulo de lanzamiento (redirección)")]
     [Range(0, 359)]
     [SerializeField] private int angulo = 0;
-    [Tooltip("Define si se conserva la inercia tras teletransportarse")]
+    [Tooltip("Define si conserva la inercia tras teletransportarse")]
     [SerializeField] private bool conservarInercia = true;
     [Tooltip("Elige si debe redirigir tras teletransportar (requiere inercia)")]
     [SerializeField] private bool redirigir = false;

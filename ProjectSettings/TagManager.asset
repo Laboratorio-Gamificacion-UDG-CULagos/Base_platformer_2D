@@ -8,7 +8,6 @@ TagManager:
   - Jugador
   - Proyectil
   - Nemico
-  - Objeto
   - Peligro
   - Interactuable
   - Pisos
@@ -24,7 +23,7 @@ TagManager:
   - Portal
   - Recolectable
   - Resorte
-  - 
+  - Llave
   - 
   - 
   - 

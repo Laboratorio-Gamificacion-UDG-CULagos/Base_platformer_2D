@@ -1,24 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class Empujador : MonoBehaviour {
+public class Resorte : Interactuable {
     [Header("Configuración del resorte")]
-    [Tooltip("Permite activar y desactivar el comportamiento del resorte")]
-    [SerializeField] private bool activo = true;
     [Tooltip("Vincula el sprite del resorte para animarlo")]
     [SerializeField] private Transform sprite;
-    [Tooltip("Permite establecer un angulo personalizado")]
+    [Tooltip("Elige si respeta un angulo personalizado")]
     [SerializeField] private bool anguloPersonalizado;
     [Tooltip("Asigna un ángulo si está activa la personalización")]
     [Range(0, 359)]
     [SerializeField] private int anguloFuerza;
-    [Tooltip("Permite añadir una fuerza de lanzamiento")]
+    [Tooltip("Elige para usar una fuerza de lanzamiento")]
     [SerializeField] private bool arrojar = true;
     [Tooltip("Asigna un valor de fuerza de lanzamiento")]
     [SerializeField] private float factorLanzamiento = 5.0f;
     [Tooltip("Asigna un tiempo de enfriamiento para el lanzamiento")]
     [SerializeField] private float tiempoEspera = 1.0f;
-    [Tooltip("Permite añadir una magnitud para limitar la fuerza")]
+    [Tooltip("Elige para añadir una magnitud para limitar la fuerza")]
     [SerializeField] private bool limitar = true;
     [Tooltip("Asigna un valor para limitar el factor")]
     [SerializeField] private float limitador = 0.5f;

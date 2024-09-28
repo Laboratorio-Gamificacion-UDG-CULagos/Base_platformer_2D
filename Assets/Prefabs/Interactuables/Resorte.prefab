@@ -91,11 +91,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992b596b4f4784a4493dae5bec9f6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anguloFuerza: 0
-  factorLanzamiento: 10
-  limitador: 0.5
-  tiempoEspera: 0.5
+  activo: 1
   sprite: {fileID: 3065342117693974374}
+  anguloPersonalizado: 0
+  anguloFuerza: 0
+  arrojar: 1
+  factorLanzamiento: 10
+  tiempoEspera: 0.5
+  limitar: 1
+  limitador: 0.5
 --- !u!1 &4059149558809633869
 GameObject:
   m_ObjectHideFlags: 0

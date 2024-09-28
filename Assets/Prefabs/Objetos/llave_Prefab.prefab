@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1354079437495422120}
   - component: {fileID: 1444336101003797307}
   - component: {fileID: 5428826027101446988}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: llave_Prefab
-  m_TagString: Objeto
+  m_TagString: Interactuable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,4 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9603c6c32c973498fedc319d4aa035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPuerta: {fileID: 0}
+  activo: 1
+  activador: 0
+  Acciones: []

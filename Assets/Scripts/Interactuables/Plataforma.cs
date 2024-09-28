@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Plataforma : MonoBehaviour {
+public class Plataforma : Interactuable {
     [Header("Configuración de la plataforma")]
     [Tooltip("Define si la plataforma se mueve o no")]
     [SerializeField] private bool esEstatica = true;
