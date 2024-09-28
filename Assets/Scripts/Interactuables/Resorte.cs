@@ -3,29 +3,35 @@ using System.Collections;
 
 public class Resorte : Interactuable {
     [Header("Configuración del resorte")]
-    [Tooltip("Vincula el sprite del resorte para animarlo")]
-    [SerializeField] private Transform sprite;
+    [Space(5)]
     [Tooltip("Elige si respeta un angulo personalizado")]
     [SerializeField] private bool anguloPersonalizado;
-    [Tooltip("Asigna un ángulo si está activa la personalización")]
-    [Range(0, 359)]
+    [Tooltip("Asigna un ángulo si está activa la personalización"), Range(0, 359)]
     [SerializeField] private int anguloFuerza;
+    [Space(5)]
     [Tooltip("Elige para usar una fuerza de lanzamiento")]
     [SerializeField] private bool arrojar = true;
     [Tooltip("Asigna un valor de fuerza de lanzamiento")]
-    [SerializeField] private float factorLanzamiento = 5.0f;
+    [SerializeField, Min(0)] private float factorLanzamiento = 5.0f;
+    [Space(5)]
     [Tooltip("Asigna un tiempo de enfriamiento para el lanzamiento")]
-    [SerializeField] private float tiempoEspera = 1.0f;
+    [SerializeField, Min(0)] private float tiempoEspera = 1.0f;
+    [Space(5)]
     [Tooltip("Elige para añadir una magnitud para limitar la fuerza")]
     [SerializeField] private bool limitar = true;
     [Tooltip("Asigna un valor para limitar el factor")]
-    [SerializeField] private float limitador = 0.5f;
+    [SerializeField, Min(0)] private float limitador = 0.5f;
 
+    [HideInInspector] [SerializeField] private Transform sprite;
     private bool enEspera = false;
     private Vector2 direccion;
     private Rigidbody2D rbJugador;
     
     private void OnValidate() {
+        ActualizarDireccion();
+    }
+    
+    protected void Start() {
         ActualizarDireccion();
     }
 
@@ -38,10 +44,26 @@ public class Resorte : Interactuable {
         direccion = new Vector2(Mathf.Cos(radianes), Mathf.Sin(radianes));
     }
 
-    private void Start() {
-        ActualizarDireccion();
-    }
+    private IEnumerator TiempoDeEspera(float espera) {
+        //Activar el tiempo de espera del resorte
+        enEspera = true;
 
+        //Baja su sprite si está asignado
+        if (sprite) sprite.position += (Vector3)direccion * 0.2f;
+
+        //Espera el tiempo especificado
+        yield return new WaitForSeconds(espera);
+
+        //Regresa a la posición original el sprite si existe
+        while (sprite && sprite.localPosition.y > 0.0f) {
+            sprite.position = Vector2.MoveTowards(sprite.position, transform.position, 0.01f);
+            yield return null;
+        }
+
+        //Desactivar el tiempo de espera del resorte
+        enEspera = false;
+    }
+    
     private void OnTriggerEnter2D(Collider2D collision) {
         //Detectamos la colisión con el jugador
         if (collision.CompareTag("Jugador") && !enEspera && activo) {
@@ -66,26 +88,6 @@ public class Resorte : Interactuable {
             //Establecemos en espera el resorte
             StartCoroutine(TiempoDeEspera(tiempoEspera));
         }
-    }
-
-    private IEnumerator TiempoDeEspera(float espera) {
-        //Activar el tiempo de espera del resorte
-        enEspera = true;
-
-        //Baja su sprite si está asignado
-        if (sprite) sprite.position += (Vector3)direccion * 0.2f;
-
-        //Espera el tiempo especificado
-        yield return new WaitForSeconds(espera);
-
-        //Regresa a la posición original el sprite si existe
-        while (sprite && sprite.localPosition.y > 0.0f) {
-            sprite.position = Vector2.MoveTowards(sprite.position, transform.position, 0.01f);
-            yield return null;
-        }
-
-        //Desactivar el tiempo de espera del resorte
-        enEspera = false;
     }
 
     private void OnDrawGizmos() {

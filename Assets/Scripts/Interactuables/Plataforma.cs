@@ -1,53 +1,53 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(PlatformEffector2D))]
 public class Plataforma : Interactuable {
     [Header("Configuración de la plataforma")]
     [Tooltip("Define si la plataforma se mueve o no")]
     [SerializeField] private bool esEstatica = true;
-    [Tooltip("Especifica la velocidad(no estática)")]
-    [SerializeField] private float velocidad = 1f;
-    [Tooltip("Establece la distancia maxima de recorrido")]
-    [SerializeField] private float distancia = 10f;
-    [Tooltip("Establece el tiempo hasta final de recorrido")]
-    [SerializeField] private float tiempoDeCambio = 5f;
+    [Tooltip("Especifica la velocidad de la plataforma (no estática)")]
+    [SerializeField, Min(0)] private float velocidad = 1.0f;
+    [Space(5)]
     [Tooltip("Establecer dirección de movimiento")]
     [SerializeField] private bool moviendoDerecha = true;
-    private float tiempoActual;
-    private float distanciaRecorrida;
-    private Vector3 posicionInicial;
-    private Rigidbody2D rbPlataforma;
-
-    [Header("Cambios de dirección")]
+    [Space(5)]
     [Tooltip("Permitir redirección por tiempo")]
     [SerializeField] private bool cambiarPorTiempo = true;
     [Tooltip("Permitir redirección por distancia")]
     [SerializeField] private bool cambiarPorDistancia = false;
+    [Space(5)]
+    [Tooltip("Establece la distancia maxima de recorrido")]
+    [SerializeField, Min(0)] private float distancia = 10.0f;
+    [Tooltip("Establece el tiempo hasta final de recorrido")]
+    [SerializeField, Min(0)] private float tiempoDeCambio = 5.0f;
+    [Space(5)]
     [Tooltip("Asignar capas de redirección por colisión")]
     [SerializeField] private LayerMask colisiones;
-
-    [Header("Interacción con Jugador")]
+    [Space(5)]
     [Tooltip("Establecer direccionalidad")]
     [SerializeField] private bool unidireccional = false;
-    private PlatformEffector2D effector;
 
-    private void Awake() {
+    [HideInInspector, SerializeField] private Rigidbody2D rbPlataforma;
+    [HideInInspector, SerializeField] private PlatformEffector2D effector;
+    private float tiempoActual;
+    private float distanciaRecorrida = 0.0f;
+    private Vector3 posicionInicial;
+
+    protected void Awake() {
         //Obteniendo parametros iniciales
         posicionInicial = transform.position;
-        tiempoActual = tiempoDeCambio;
-        distanciaRecorrida = 0f;
-        rbPlataforma = GetComponent<Rigidbody2D>();
-        effector = GetComponent<PlatformEffector2D>();
     }
 
-    private void Update() {
+    protected override void Update() {
+        //Llamamos al base heredada para conservar el comportamiento
+        base.Update();
+
         //Comportamiento base
         if (!esEstatica && activo) MoverPlataforma();
+        else if (!activo) rbPlataforma.velocity = Vector3.zero;
 
         //Actualizar funcion del usuario
         if (effector) effector.enabled = unidireccional;
-
-        //Mostramos en el Editor los Rays
-        Debug.DrawRay(transform.position, Vector2.left * 0.5f * GetComponent<SpriteRenderer>().size.x  * (moviendoDerecha ? -1 : 1), Color.red);
 
         // Detectar si hay un muro a la izquierda o a la derecha
         bool hayMuro = DetectarMuro(moviendoDerecha ? -1 : 1);
@@ -87,5 +87,10 @@ public class Plataforma : Interactuable {
         moviendoDerecha = !moviendoDerecha;
         tiempoActual = tiempoDeCambio;
         distanciaRecorrida = 0f;
+    }
+    
+    private void OnDrawGizmos() {
+        //Mostramos en el Editor los Rays de dirección
+        Debug.DrawRay(transform.position, Vector2.left * 0.5f * GetComponent<SpriteRenderer>().size.x * (moviendoDerecha ? -1 : 1), Color.red);
     }
 }

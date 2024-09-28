@@ -3,20 +3,23 @@ using System.Collections;
 
 public class Puas : Interactuable {
     [Header("Configuración de las púas")]
-    [Tooltip("Vincula el sprite de las para animarlas")]
-    [SerializeField] private Transform sprite;
     [Tooltip("Asigna un tiempo de enfriamiento las púas")]
-    [SerializeField] private float tiempoEspera = 2.0f;
+    [SerializeField, Min(0)] private float tiempoEspera = 2.0f;
+    [Space(5)]
     [Tooltip("Elige si respeta un angulo personalizado")]
     [SerializeField] private bool anguloPersonalizado;
-    [Tooltip("Asigna un ángulo si está activa la personalización")]
-    [Range(0, 359)]
+    [Tooltip("Asigna un ángulo si está activa la personalización"), Range(0, 359)]
     [SerializeField] private int anguloFuerza;
 
+    [HideInInspector] [SerializeField] private Transform sprite;
     private bool enEspera = false;
     private Vector2 direccion;
 
     private void OnValidate() {
+        ActualizarDireccion();
+    }
+    
+    protected void Start() {
         ActualizarDireccion();
     }
 
@@ -27,18 +30,6 @@ public class Puas : Interactuable {
         //Calcula la dirección de la normal del resorte según el ángulo
         float radianes = (anguloFuerza + 90) * Mathf.Deg2Rad;
         direccion = new Vector2(Mathf.Cos(radianes), Mathf.Sin(radianes));
-    }
-
-    private void Start() {
-        ActualizarDireccion();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-        //Detectamos la colisión con el jugador
-        if (collision.CompareTag("Jugador") && !enEspera && activo) {
-            //Establecemos en espera de las púas
-            StartCoroutine(TiempoDeEspera(tiempoEspera));
-        }
     }
 
     private IEnumerator TiempoDeEspera(float espera) {
@@ -61,6 +52,14 @@ public class Puas : Interactuable {
         enEspera = false;
     }
     
+    private void OnTriggerEnter2D(Collider2D collision) {
+        //Detectamos la colisión con el jugador
+        if (collision.CompareTag("Jugador") && !enEspera && activo) {
+            //Establecemos en espera de las púas
+            StartCoroutine(TiempoDeEspera(tiempoEspera));
+        }
+    }
+
     private void OnDrawGizmos() {
         //Visualizamos la dirección de salida del portal
         Gizmos.color = Color.red;

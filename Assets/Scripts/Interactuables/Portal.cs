@@ -5,32 +5,25 @@ public class Portal : Interactuable {
     [Header("Configuración del Portal")]
     [Tooltip("Arrastra un portal de salida")]
     [SerializeField] private Portal portalSalida;
-    [Tooltip("Añade un multiplicador de lanzamiento (redirección)")]
-    [SerializeField] private float multiplicadorInercia = 1.0f;
-    [Tooltip("Añade un ángulo de lanzamiento (redirección)")]
-    [Range(0, 359)]
+    [Space(5)]
+    [Tooltip("Añade un multiplicador de lanzamiento (0 para desactivar)")]
+    [SerializeField, Min(0)] private float multiplicadorInercia = 1.0f;
+    [Tooltip("Añade un ángulo de lanzamiento (redirección)"), Range(0, 359)]
     [SerializeField] private int angulo = 0;
+    [Space(5)]
     [Tooltip("Define si conserva la inercia tras teletransportarse")]
     [SerializeField] private bool conservarInercia = true;
+    [Space(5)]
     [Tooltip("Elige si debe redirigir tras teletransportar (requiere inercia)")]
     [SerializeField] private bool redirigir = false;
+    [Space(5)]
     [Tooltip("Tiempo de espera (en segundos) para reutilizar el portal")]
-    [SerializeField] private float tiempoEspera = 1.0f;
+    [SerializeField, Min(0)] private float tiempoEspera = 1.0f;
 
     private bool enEspera = false;
     private Rigidbody2D rbJugador;
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        //Salir si el portal no está activo
-        if (!activo || enEspera) return;
-
-        //Detectar si es un jugador lo que toca
-        if (collision.CompareTag("Jugador")) {
-            rbJugador = collision.GetComponent<Rigidbody2D>();
-        }
-    }
-    
-    void FixedUpdate() {
+    protected void FixedUpdate() {
         //Bloqueamos si no hay conexión
         if (!portalSalida) activo = false;
 
@@ -80,6 +73,16 @@ public class Portal : Interactuable {
 
         //Desactivar el tiempo de espera del portal
         enEspera = false;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D collision) {
+        //Salir si el portal no está activo
+        if (!activo || enEspera) return;
+
+        //Detectar si es un jugador lo que toca
+        if (collision.CompareTag("Jugador")) {
+            rbJugador = collision.GetComponent<Rigidbody2D>();
+        }
     }
     
     private void OnDrawGizmos() {
