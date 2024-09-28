@@ -41,7 +41,7 @@ public class Plataforma : Interactuable {
 
     private void Update() {
         //Comportamiento base
-        if (!esEstatica) MoverPlataforma();
+        if (!esEstatica && activo) MoverPlataforma();
 
         //Actualizar funcion del usuario
         if (effector) effector.enabled = unidireccional;

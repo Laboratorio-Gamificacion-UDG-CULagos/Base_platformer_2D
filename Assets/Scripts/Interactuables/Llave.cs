@@ -4,8 +4,8 @@ public class Llave : Interactuable {
     [Header("Configuración de la llave")]
     [Tooltip("Elige si desencadena acciones")]
     [SerializeField] private bool desencadenador = false;
-    [Tooltip("Vincula objetos para activarlos cuando sea recolectada")]
-    [SerializeField] private GameObject[] Acciones;
+    [Tooltip("Arrastra interactuables objetos para habilitarlos")]
+    [SerializeField] private Interactuable[] Acciones;
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detecta colisiones con el jugador
@@ -15,9 +15,9 @@ public class Llave : Interactuable {
                 //Se itera en cada objeto asignado, siendo que hay minimo uno
                 for(int i = 0; i < Acciones.Length; i++) {
                     //Buscamos si son objetos activables
-                    if (Acciones[i] && Acciones[i].TryGetComponent<Interactuable>(out Interactuable objeto)) {
+                    if (Acciones[i]) {
                         //Invertimos su estado
-                        objeto.activo = !objeto.activo;
+                        Acciones[i].activo = !Acciones[i].activo;
                     }
                 }
             }

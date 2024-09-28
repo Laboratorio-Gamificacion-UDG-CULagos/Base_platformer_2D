@@ -24,10 +24,22 @@ public class Resorte : Interactuable {
     private bool enEspera = false;
     private Vector2 direccion;
     private Rigidbody2D rbJugador;
+    
+    private void OnValidate() {
+        ActualizarDireccion();
+    }
+
+    private void ActualizarDireccion() {
+        //Obtener la rotación Z del objeto y ajustar el ángulo de lanzamiento
+        if (!anguloPersonalizado) anguloFuerza = (int)transform.eulerAngles.z % 359;
+
+        //Calcula la dirección de la normal del resorte según el ángulo
+        float radianes = (anguloFuerza + 90) * Mathf.Deg2Rad;
+        direccion = new Vector2(Mathf.Cos(radianes), Mathf.Sin(radianes));
+    }
 
     private void Start() {
-        //Obtener la rotación Z del objeto y ajustar el ángulo de lanzamiento
-        if(!anguloPersonalizado) anguloFuerza = (int)transform.eulerAngles.z % 359;
+        ActualizarDireccion();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -35,10 +47,6 @@ public class Resorte : Interactuable {
         if (collision.CompareTag("Jugador") && !enEspera && activo) {
             //Referenciamos al jugador
             rbJugador = collision.GetComponent<Rigidbody2D>();
-
-            //Calcula la dirección de la normal del resorte según el ángulo
-            float radianes = (anguloFuerza + 90) * Mathf.Deg2Rad;
-            direccion = new Vector2(Mathf.Cos(radianes), Mathf.Sin(radianes));
 
             //Obtenemos la velocidad del jugador
             Vector2 velocidadJugador = rbJugador.velocity;
@@ -83,7 +91,6 @@ public class Resorte : Interactuable {
     private void OnDrawGizmos() {
         //Visualizamos la dirección de salida del portal
         Gizmos.color = Color.red;
-        Vector2 finalPos = new Vector2(Mathf.Cos((anguloFuerza + 90) * Mathf.Deg2Rad), Mathf.Sin((anguloFuerza + 90) * Mathf.Deg2Rad));
-        Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (finalPos * factorLanzamiento / 10));
+        Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (direccion * factorLanzamiento / 10) + direccion / 2);
     }
 }
