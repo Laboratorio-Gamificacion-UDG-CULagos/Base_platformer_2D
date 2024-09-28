@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1562890955158288682}
   - component: {fileID: 5965584738827307801}
   m_Layer: 0
-  m_Name: pua_Prefab
+  m_Name: Puas_Prefab
   m_TagString: Peligro
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,14 +75,14 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1790013181, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5fd29022515e0db4392b7bbcfb13d1a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 2
+  m_Size: {x: 1, y: 0.49999997}
   m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
@@ -115,21 +115,21 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.24078709}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1.0234375, y: 0.5}
+    newSize: {x: 1, y: 0.49999997}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
+    drawMode: 2
+    adaptiveTiling: 1
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5184258}
+  m_Size: {x: 1.0234375, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &5965584738827307801
 MonoBehaviour:
