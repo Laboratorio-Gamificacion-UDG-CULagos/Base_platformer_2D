@@ -22,7 +22,8 @@ public class Resorte : Interactuable {
     [Tooltip("Asigna un valor para limitar el factor")]
     [SerializeField, Min(0)] private float limitador = 0.5f;
 
-    [HideInInspector] [SerializeField] private Transform sprite;
+    [Space(15)]
+    [SerializeField] private Transform sprite;
     private bool enEspera = false;
     private Vector2 direccion;
     private Rigidbody2D rbJugador;

@@ -27,8 +27,8 @@ public class Plataforma : Interactuable {
     [Tooltip("Establecer direccionalidad")]
     [SerializeField] private bool unidireccional = false;
 
-    [HideInInspector, SerializeField] private Rigidbody2D rbPlataforma;
-    [HideInInspector, SerializeField] private PlatformEffector2D effector;
+    private Rigidbody2D rbPlataforma;
+    private PlatformEffector2D effector;
     private float tiempoActual;
     private float distanciaRecorrida = 0.0f;
     private Vector3 posicionInicial;
@@ -36,6 +36,10 @@ public class Plataforma : Interactuable {
     protected void Awake() {
         //Obteniendo parametros iniciales
         posicionInicial = transform.position;
+
+        //Checamos que tenga la información correcta
+        if (!rbPlataforma) rbPlataforma = GetComponent<Rigidbody2D>();
+        if (!effector) effector = GetComponent<PlatformEffector2D>();
     }
 
     protected override void Update() {
@@ -55,7 +59,7 @@ public class Plataforma : Interactuable {
         if (hayMuro) CambiarDireccion();
     }
 
-    bool DetectarMuro(int dir) {
+    private bool DetectarMuro(int dir) {
         //Raycasteamos para detectar un muro en la direccion que avanza
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left * dir, 0.5f * GetComponent<SpriteRenderer>().size.x, colisiones);
         return hit.collider != null;

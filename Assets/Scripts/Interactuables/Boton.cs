@@ -4,16 +4,17 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Boton : Interactuable {
     [Header("Configuración del botón")]
-    [Tooltip("Arrastra un sprite a mostrar default")]
-    [SerializeField] private Sprite spriteOff;
-    [Tooltip("Arrastra un sprite a mostrar al activarse")]
-    [SerializeField] private Sprite spriteOn;
     [Space(5)]
     [Tooltip("Tiempo de espera (en segundos) para reutilizar el botón")]
     [SerializeField, Min(0)] private float tiempoEspera = 0.5f;
     [Tooltip("Arrastra interactuables objetos para habilitarlos")]
     [SerializeField] private Interactuable[] Acciones;
 
+    [Space(15)]
+    [Tooltip("Arrastra un sprite a mostrar default")]
+    [SerializeField] private Sprite spriteOff;
+    [Tooltip("Arrastra un sprite a mostrar al activarse")]
+    [SerializeField] private Sprite spriteOn;
     private bool enEspera = false;
     private Rigidbody2D rbJugador;
 

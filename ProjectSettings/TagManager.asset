@@ -11,6 +11,7 @@ TagManager:
   - Peligro
   - Interactuable
   - Pisos
+  - Luces
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Resorte
   - Llave
   - Puas
-  - 
+  - Antorcha
   - 
   - 
   - 

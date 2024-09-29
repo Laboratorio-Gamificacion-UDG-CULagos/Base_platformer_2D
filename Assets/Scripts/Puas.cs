@@ -11,7 +11,8 @@ public class Puas : Interactuable {
     [Tooltip("Asigna un ángulo si está activa la personalización"), Range(0, 359)]
     [SerializeField] private int anguloFuerza;
 
-    [HideInInspector] [SerializeField] private Transform sprite;
+    [Space(15)]
+    [SerializeField] private Transform sprite;
     private bool enEspera = false;
     private Vector2 direccion;
 
