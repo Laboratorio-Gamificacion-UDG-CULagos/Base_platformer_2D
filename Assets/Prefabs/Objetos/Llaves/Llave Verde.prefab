@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1444336101003797307}
   - component: {fileID: 5428826027101446988}
   m_Layer: 11
-  m_Name: llave_Prefab
+  m_Name: Llave Verde
   m_TagString: Interactuable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -423142554, guid: 07fd39d7fe12cdf47b80ea1b12d3ab38, type: 3}
+  m_Sprite: {fileID: -1663432832, guid: 07fd39d7fe12cdf47b80ea1b12d3ab38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activo: 1
-  activador: 0
+  desencadenador: 0
   Acciones: []
