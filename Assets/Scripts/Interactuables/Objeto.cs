@@ -6,7 +6,7 @@ public class Objeto : Interactuable {
     [Tooltip("Elige un valor cuantitativo")]
     [SerializeField, Min(0)] private int valor = 1;
     
-    private void OnTriggerEnter2D(Collider2D colisionado) {
+    protected virtual void OnTriggerEnter2D(Collider2D colisionado) {
         //Detecta colisiones con el jugador
         if(colisionado.CompareTag("Jugador")) {
             //PENDIENTE AÑADIR DESENCADENAMIENTO DE ACCIONES UI

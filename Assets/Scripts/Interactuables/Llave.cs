@@ -1,14 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class Llave : Interactuable {
+public class Llave : Objeto {
     [Header("Configuración de la llave")]
     [Tooltip("Elige si desencadena acciones")]
     [SerializeField] private bool desencadenador = false;
     [Tooltip("Arrastra interactuables objetos para habilitarlos")]
     [SerializeField] private Interactuable[] Acciones;
 
-    private void OnTriggerEnter2D(Collider2D colisionado) {
+    protected override void OnTriggerEnter2D(Collider2D colisionado) {
+        //Llamamos al método del que hereda
+        base.OnTriggerEnter2D (colisionado);
+
         //Detecta colisiones con el jugador
         if(colisionado.CompareTag("Jugador")) {
             //Activamos los objetos que son activables
@@ -23,8 +25,5 @@ public class Llave : Interactuable {
                 }
             }
         }
-
-        //Destruye la llave milisegundos despues
-        Destroy(gameObject, 0.05f);
     }
 }
