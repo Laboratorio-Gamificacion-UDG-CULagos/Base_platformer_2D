@@ -11,6 +11,15 @@ public class Puas : Interactuable {
     [SerializeField] private bool anguloPersonalizado;
     [Tooltip("Asigna un ángulo si está activa la personalización"), Range(0, 359)]
     [SerializeField] private int anguloFuerza;
+    [Space(5)]
+    [Tooltip("Elige el valor de daño al contacto")]
+    [SerializeField, Min(0)] private int golpe = 1;
+    [Tooltip("Permite lanzar al jugador de regreso")]
+    [SerializeField] private bool repeler;
+    [Tooltip("Agrega un multiplicador de repulsión")]
+    [SerializeField, Min(0)] private float factorRepulsion = 1.0f;
+    [Tooltip("Anula el movimiento del jugador")]
+    [SerializeField] private bool detener;
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
@@ -55,9 +64,21 @@ public class Puas : Interactuable {
         enEspera = false;
     }
     
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
-        if (collision.CompareTag("Jugador") && !enEspera && activo) {
+        if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
+            //Actualizamos su vida
+            colisionado.GetComponent<Personaje>().vida -= golpe;
+
+            //Checamos si habilita repeler
+            if (repeler) {
+                Rigidbody2D rbJugador = colisionado.GetComponent<Rigidbody2D>();
+                Vector2 nuevaVelocidad = new Vector2(-rbJugador.velocity.x, -rbJugador.velocity.y) * factorRepulsion;
+                rbJugador.velocity = nuevaVelocidad;
+            } else if (detener) {
+                colisionado.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+
             //Establecemos en espera de las púas
             StartCoroutine(TiempoDeEspera(tiempoEspera));
         }

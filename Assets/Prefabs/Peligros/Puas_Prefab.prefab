@@ -179,4 +179,8 @@ MonoBehaviour:
   tiempoEspera: 2
   anguloPersonalizado: 0
   anguloFuerza: 0
+  golpe: 1
+  repeler: 1
+  factorRepulsion: 1
+  detener: 0
   sprite: {fileID: 5784122563320628911}

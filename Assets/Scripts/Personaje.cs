@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Personaje : MonoBehaviour {
     //Variables de personalización
     [Header("Configuración del jugador")]
@@ -12,7 +13,7 @@ public class Personaje : MonoBehaviour {
     [Tooltip("Habilita si puede realizar saltos en la pared")]
     [SerializeField] private bool saltoEnPared = false;
     [Tooltip("Limita de vida base del personaje")]
-    [SerializeField] private int vida = 6; // PENDIENTE
+    [SerializeField] public int vida = 6;
     [Tooltip("Asigna una fuerza para movimiento horizontal")]
     [SerializeField] private float fuerzaMovimiento = 0.9f;
     [Tooltip("Asigna una velocidad máxima para movimiento")]
