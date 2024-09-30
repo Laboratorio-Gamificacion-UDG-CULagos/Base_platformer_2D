@@ -30,9 +30,9 @@ public class Bandera : Interactuable {
         else GetComponent<SpriteRenderer>().sprite = spriteMarcada;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
-        if (collision.CompareTag("Jugador") && activo) {
+        if (colisionado.CompareTag("Jugador") && activo) {
             //Activamos los objetos que son activables
             if(Acciones.Length > 0) { 
                 //Se itera en cada objeto asignado, siendo que hay mínimo uno

@@ -67,11 +67,11 @@ public class Resorte : Interactuable {
         enEspera = false;
     }
     
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
-        if (collision.CompareTag("Jugador") && !enEspera && activo) {
+        if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
             //Referenciamos al jugador
-            rbJugador = collision.GetComponent<Rigidbody2D>();
+            rbJugador = colisionado.GetComponent<Rigidbody2D>();
 
             //Obtenemos la velocidad del jugador
             Vector2 velocidadJugador = rbJugador.velocity;

@@ -25,9 +25,9 @@ public class Puerta : Interactuable {
         else GetComponent<SpriteRenderer>().sprite = spriteCerrada;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D colisionado) {
         //Checamos colisiones con jugadores
-        if (collision.CompareTag("Jugador") && activo) {
+        if (colisionado.CompareTag("Jugador") && activo) {
             //Cargar escena
             if (cambiarEscenas) SceneManager.LoadScene(escena);
         }

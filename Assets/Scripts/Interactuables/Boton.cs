@@ -17,11 +17,10 @@ public class Boton : Interactuable {
     [Tooltip("Arrastra un sprite a mostrar al activarse")]
     [SerializeField] private Sprite spriteOn;
     private bool enEspera = false;
-    private Rigidbody2D rbJugador;
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
-        if (collision.CompareTag("Jugador") && !enEspera && activo) {
+        if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
             //Establecemos en espera del botón
             StartCoroutine(TiempoDeEspera(tiempoEspera));
 

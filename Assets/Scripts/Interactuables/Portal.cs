@@ -77,13 +77,13 @@ public class Portal : Interactuable {
         enEspera = false;
     }
     
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D colisionado) {
         //Salir si el portal no está activo
         if (!activo || enEspera) return;
 
         //Detectar si es un jugador lo que toca
-        if (collision.CompareTag("Jugador")) {
-            rbJugador = collision.GetComponent<Rigidbody2D>();
+        if (colisionado.CompareTag("Jugador")) {
+            rbJugador = colisionado.GetComponent<Rigidbody2D>();
         }
     }
     
