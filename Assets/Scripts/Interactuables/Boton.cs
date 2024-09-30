@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Boton : Interactuable {
     [Header("Configuración del botón")]
     [Space(5)]
@@ -10,7 +10,8 @@ public class Boton : Interactuable {
     [Tooltip("Arrastra interactuables objetos para habilitarlos")]
     [SerializeField] private Interactuable[] Acciones;
 
-    [Space(15)]
+    [Space(20)]
+    [Header("DEV (Variables de control)")]
     [Tooltip("Arrastra un sprite a mostrar default")]
     [SerializeField] private Sprite spriteOff;
     [Tooltip("Arrastra un sprite a mostrar al activarse")]

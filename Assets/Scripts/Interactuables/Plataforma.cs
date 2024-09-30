@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(PlatformEffector2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(PlatformEffector2D))]
 public class Plataforma : Interactuable {
     [Header("Configuración de la plataforma")]
     [Tooltip("Define si la plataforma se mueve o no")]
@@ -26,7 +26,9 @@ public class Plataforma : Interactuable {
     [Space(5)]
     [Tooltip("Establecer direccionalidad")]
     [SerializeField] private bool unidireccional = false;
+    [Space(20)]
 
+    [Header("DEV (Variables de control)")]
     private Rigidbody2D rbPlataforma;
     private PlatformEffector2D effector;
     private float tiempoActual;

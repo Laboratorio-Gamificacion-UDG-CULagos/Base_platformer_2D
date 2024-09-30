@@ -1,19 +1,6 @@
 using UnityEngine;
 
 public class Personaje : MonoBehaviour {
-    //Variables de funcionamiento
-    [Header("DEV: Variables de control")]
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private SpriteRenderer sr;
-    [SerializeField] private Animator ani;
-    [SerializeField] private RectTransform hud; // PENDIENTE
-    [SerializeField] private GameObject prefabBala; // PENDIENTE
-    [SerializeField] private float velocidadBala = 20.0f; // PENDIENTE
-    [SerializeField] private float beelX = 0.0f;
-    [SerializeField] private float inputX = 0.0f;
-    [SerializeField] private float airTime = 0.0f;
-    [SerializeField] private bool parado = false;
-
     //Variables de personalización
     [Header("Configuración del jugador")]
     [Tooltip("Asigna tiempo en aire permitido para saltar")]
@@ -40,7 +27,20 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private LayerMask plataformas;
     [Tooltip("Asigna un rango de detección de superficies para caminado")]
     [SerializeField] private float largoRaycast = 0.55f;
+    [Space(20)]
 
+    //Variables de funcionamiento
+    [Header("DEV (Variables de control)")]
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private Animator ani;
+    [SerializeField] private RectTransform hud; // PENDIENTE
+    [SerializeField] private GameObject prefabBala; // PENDIENTE
+    [SerializeField] private float velocidadBala = 20.0f; // PENDIENTE
+    [SerializeField] private float beelX = 0.0f;
+    [SerializeField] private float inputX = 0.0f;
+    [SerializeField] private float airTime = 0.0f;
+    [SerializeField] private bool parado = false;
 
     private void Update() {
         //Detección de piso

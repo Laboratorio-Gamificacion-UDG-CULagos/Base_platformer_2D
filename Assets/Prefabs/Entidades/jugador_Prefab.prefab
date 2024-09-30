@@ -160,8 +160,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35, y: 0.8}
-  m_EdgeRadius: 0.055
+  m_Size: {x: 0.35, y: 0.75}
+  m_EdgeRadius: 0.0555
 --- !u!95 &8177754970193200380
 Animator:
   serializedVersion: 5
@@ -200,27 +200,27 @@ MonoBehaviour:
   ani: {fileID: 8177754970193200380}
   hud: {fileID: 0}
   prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
+  velocidadBala: 20
+  beelX: 0
+  inputX: 0
+  airTime: 0
+  parado: 0
+  coyoteTime: 0.1
+  moverConPlataformas: 1
+  movimientoAereo: 1
+  saltoEnPared: 1
+  vida: 6
+  fuerzaMovimiento: 1
+  velocidadMaxima: 5
+  fuerzaSalto: 10
+  resistencia: 0.85
   pisables:
     serializedVersion: 2
     m_Bits: 73
   plataformas:
     serializedVersion: 2
     m_Bits: 8
-  parado: 0
-  moverConPlataformas: 1
-  movimientoAereo: 1
-  saltoEnPared: 1
-  vida: 6
-  fuerzaMovimiento: 1
   largoRaycast: 0.55
-  velocidadBala: 20
-  velocidadMaxima: 5
-  fuerzaSalto: 10
-  resistencia: 0.85
-  beelX: 0
-  inputX: 0
-  airTime: 0
-  coyoteTime: 0.1
 --- !u!114 &5764734688219971851
 MonoBehaviour:
   m_ObjectHideFlags: 0

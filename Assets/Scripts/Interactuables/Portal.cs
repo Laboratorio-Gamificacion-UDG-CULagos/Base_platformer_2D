@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Portal : Interactuable {
     [Header("Configuración del Portal")]
     [Tooltip("Arrastra un portal de salida")]
@@ -20,6 +21,7 @@ public class Portal : Interactuable {
     [Tooltip("Tiempo de espera (en segundos) para reutilizar el portal")]
     [SerializeField, Min(0)] private float tiempoEspera = 1.0f;
 
+    [Header("DEV (Variables de control)")]
     private bool enEspera = false;
     private Rigidbody2D rbJugador;
 

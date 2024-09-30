@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Collider2D))]
 public class Resorte : Interactuable {
     [Header("Configuración del resorte")]
     [Space(5)]
@@ -22,7 +23,8 @@ public class Resorte : Interactuable {
     [Tooltip("Asigna un valor para limitar el factor")]
     [SerializeField, Min(0)] private float limitador = 0.5f;
 
-    [Space(15)]
+    [Space(20)]
+    [Header("DEV (Variables de control)")]
     [SerializeField] private Transform sprite;
     private bool enEspera = false;
     private Vector2 direccion;

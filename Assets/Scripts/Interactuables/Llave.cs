@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Llave : Interactuable {
     [Header("Configuración de la llave")]
     [Tooltip("Elige si desencadena acciones")]

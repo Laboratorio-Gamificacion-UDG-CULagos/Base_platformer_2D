@@ -32,7 +32,8 @@ public class Luz : Interactuable {
     [Tooltip("Controla si el cambio de color es intermitente o fluido")]
     [SerializeField] private bool colorSimple = false;
 
-    [Space(15)]
+    [Space(20)]
+    [Header("DEV (Variables de control)")]
     [Tooltip("Arrastra un sprite a mostrar default")]
     [SerializeField] private Sprite spriteOff;
     [Tooltip("Arrastra un sprite a mostrar al activarse")]

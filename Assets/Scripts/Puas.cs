@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Collider2D))]
 public class Puas : Interactuable {
     [Header("Configuración de las púas")]
     [Tooltip("Asigna un tiempo de enfriamiento las púas")]
@@ -11,7 +12,8 @@ public class Puas : Interactuable {
     [Tooltip("Asigna un ángulo si está activa la personalización"), Range(0, 359)]
     [SerializeField] private int anguloFuerza;
 
-    [Space(15)]
+    [Space(20)]
+    [Header("DEV (Variables de control)")]
     [SerializeField] private Transform sprite;
     private bool enEspera = false;
     private Vector2 direccion;
