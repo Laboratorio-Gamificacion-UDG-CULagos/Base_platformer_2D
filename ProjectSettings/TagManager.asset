@@ -5,36 +5,36 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemigo
+  - Plataforma
   - Jugador
   - Proyectil
   - Nemico
+  - Objeto
   - Peligro
   - Interactuable
-  - Pisos
-  - Luces
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Plataforma
+  - 
   - Water
   - UI
   - Piso
-  - Entidad
-  - Portal
-  - Recolectable
-  - Resorte
-  - Llave
-  - Puas
-  - Antorcha
-  - Puerta
-  - Bandera
-  - Muro
-  - Estrella
-  - Moneda
-  - Joya
-  - Regenerador
-  - Palanca
+  - Enemigos
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
