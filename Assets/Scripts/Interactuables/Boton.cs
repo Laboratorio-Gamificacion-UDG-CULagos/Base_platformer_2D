@@ -7,7 +7,7 @@ public class Boton : Interactuable {
     [Space(5)]
     [Tooltip("Tiempo de espera (en segundos) para reutilizar el botón")]
     [SerializeField, Min(0)] private float tiempoEspera = 0.5f;
-    [Tooltip("Arrastra interactuables objetos para habilitarlos")]
+    [Tooltip("Arrastra objetos interactuables para habilitarlos")]
     [SerializeField] private Interactuable[] Acciones;
 
     [Space(20)]
@@ -24,16 +24,16 @@ public class Boton : Interactuable {
         if (collision.CompareTag("Jugador") && !enEspera && activo) {
             //Establecemos en espera del botón
             StartCoroutine(TiempoDeEspera(tiempoEspera));
-        }
 
-        //Activamos los objetos que son activables
-        if(Acciones.Length > 0) { 
-            //Se itera en cada objeto asignado, siendo que hay mínimo uno
-            for(int i = 0; i < Acciones.Length; i++) {
-                //Buscamos si son objetos activables
-                if (Acciones[i]) {
-                    //Invertimos su estado
-                    Acciones[i].activo = !Acciones[i].activo;
+            //Activamos los objetos que son activables
+            if(Acciones.Length > 0) { 
+                //Se itera en cada objeto asignado, siendo que hay mínimo uno
+                for(int i = 0; i < Acciones.Length; i++) {
+                    //Buscamos si son objetos activables
+                    if (Acciones[i]) {
+                        //Invertimos su estado
+                        Acciones[i].activo = !Acciones[i].activo;
+                    }
                 }
             }
         }
