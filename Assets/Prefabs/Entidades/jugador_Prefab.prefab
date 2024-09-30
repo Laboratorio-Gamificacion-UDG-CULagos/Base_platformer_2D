@@ -195,16 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236fb38f435e7954c974baadc853fc9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2002861623042762474}
-  sr: {fileID: 5683096783900120633}
-  ani: {fileID: 8177754970193200380}
-  hud: {fileID: 0}
-  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
-  velocidadBala: 20
-  beelX: 0
-  inputX: 0
-  airTime: 0
-  parado: 0
   coyoteTime: 0.1
   moverConPlataformas: 1
   movimientoAereo: 1
@@ -216,11 +206,21 @@ MonoBehaviour:
   resistencia: 0.85
   pisables:
     serializedVersion: 2
-    m_Bits: 73
+    m_Bits: 65609
   plataformas:
     serializedVersion: 2
     m_Bits: 8
   largoRaycast: 0.55
+  rb: {fileID: 2002861623042762474}
+  sr: {fileID: 5683096783900120633}
+  ani: {fileID: 8177754970193200380}
+  hud: {fileID: 0}
+  prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
+  velocidadBala: 20
+  beelX: 0
+  inputX: 0
+  airTime: 0
+  parado: 0
 --- !u!114 &5764734688219971851
 MonoBehaviour:
   m_ObjectHideFlags: 0
