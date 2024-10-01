@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2006266695218904364}
   - component: {fileID: 9100839263251503590}
   m_Layer: 21
-  m_Name: Palanca Simple
+  m_Name: Palanca Flip Flop
   m_TagString: Interactuable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,11 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be5b806cf7b7ed42b3831f94c1bbe90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activo: 1
+  activo: 0
   tiempoEspera: 0.5
-  Acciones:
-  - {fileID: 0}
-  - {fileID: 0}
+  Acciones: []
   apuntaDerecha: 0
   spriteIzq: {fileID: 1011722303, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
   spriteDer: {fileID: -993522116, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}

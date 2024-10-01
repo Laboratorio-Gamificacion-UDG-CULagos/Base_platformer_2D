@@ -11,5 +11,4 @@ public class Muro : Interactuable {
         //Animamos el estado del muro
         GetComponent<SpriteRenderer>().enabled = activo;
     }
-
 }

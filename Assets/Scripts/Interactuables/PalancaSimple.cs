@@ -1,6 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class PalancaSimple : Interactuable {
@@ -21,6 +20,22 @@ public class PalancaSimple : Interactuable {
     [Tooltip("Arrastra un sprite a mostrar contraria")]
     [SerializeField] private Sprite spriteDer;
     private bool enEspera = false;
+    
+    private void EjecutarAcciones() {
+        apuntaDerecha = !apuntaDerecha;
+
+        //Activamos los objetos que son activables
+        if(Acciones.Length > 0) { 
+            //Se itera en cada objeto asignado, siendo que hay mínimo uno
+            for(int i = 0; i < Acciones.Length; i++) {
+                //Buscamos si son objetos activables
+                if (Acciones[i]) {
+                    //Invertimos su estado
+                    Acciones[i].activo = !Acciones[i].activo;
+                }
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
@@ -37,22 +52,6 @@ public class PalancaSimple : Interactuable {
                 } else if (apuntaDerecha && rbJugador.velocity.x < 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteIzq;
                     EjecutarAcciones();
-                }
-            }
-        }
-    }
-
-    private void EjecutarAcciones() {
-        apuntaDerecha = !apuntaDerecha;
-
-        //Activamos los objetos que son activables
-        if(Acciones.Length > 0) { 
-            //Se itera en cada objeto asignado, siendo que hay mínimo uno
-            for(int i = 0; i < Acciones.Length; i++) {
-                //Buscamos si son objetos activables
-                if (Acciones[i]) {
-                    //Invertimos su estado
-                    Acciones[i].activo = !Acciones[i].activo;
                 }
             }
         }
