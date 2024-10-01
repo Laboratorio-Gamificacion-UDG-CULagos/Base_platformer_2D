@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6332772487362061805}
   - component: {fileID: 970751251032960273}
   m_Layer: 12
-  m_Name: Puas_Prefab
+  m_Name: Puas Trampa
   m_TagString: Peligro
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 5645468879056013946}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5, y: -1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -150,7 +150,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.1}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -177,10 +177,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activo: 1
   tiempoEspera: 2
-  anguloPersonalizado: 0
-  anguloFuerza: 0
   golpe: 1
   repeler: 1
   factorRepulsion: 1
   detener: 0
   sprite: {fileID: 5784122563320628911}
+  enEspera: 0
+  direccion: {x: -0.00000004371139, y: 1}
+  anguloPersonalizado: 0
+  anguloFuerza: 0
