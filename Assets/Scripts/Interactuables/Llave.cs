@@ -5,7 +5,7 @@ public class Llave : Objeto {
     [Tooltip("Elige si desencadena acciones")]
     [SerializeField] private bool desencadenador = false;
     [Tooltip("Arrastra interactuables objetos para habilitarlos")]
-    [SerializeField] private Interactuable[] Acciones;
+    [SerializeField] private Interactuable[] acciones;
 
     protected override void OnTriggerEnter2D(Collider2D colisionado) {
         //Llamamos al método del que hereda
@@ -14,13 +14,13 @@ public class Llave : Objeto {
         //Detecta colisiones con el jugador
         if(colisionado.CompareTag("Jugador")) {
             //Activamos los objetos que son activables
-            if(Acciones.Length > 0 && desencadenador) {
+            if(acciones.Length > 0 && desencadenador) {
                 //Se itera en cada objeto asignado, siendo que hay mínimo uno
-                for (int i = 0; i < Acciones.Length; i++) {
+                for (int i = 0; i < acciones.Length; i++) {
                     //Buscamos si son objetos activables
-                    if (Acciones[i]) {
+                    if (acciones[i]) {
                         //Invertimos su estado
-                        Acciones[i].activo = !Acciones[i].activo;
+                        acciones[i].activo = !acciones[i].activo;
                     }
                 }
             }

@@ -7,7 +7,7 @@ public class Bandera : Interactuable {
     [Tooltip("Marca el estado cuando el jugador ya la ha usado")]
     [SerializeField] private bool marcada = false;
     [Tooltip("Arrastra objetos interactuables para habilitarlos")]
-    [SerializeField] private Interactuable[] Acciones;
+    [SerializeField] private Interactuable[] acciones;
     [Space(5)]
     [Tooltip("Permite realizar cambios de escena al ser tocada")]
     [SerializeField] private bool cambiarEscenas = false;
@@ -34,16 +34,20 @@ public class Bandera : Interactuable {
         //Detectamos la colisión con el jugador
         if (colisionado.CompareTag("Jugador") && activo) {
             //Activamos los objetos que son activables
-            if(Acciones.Length > 0) { 
+            if(acciones.Length > 0) { 
                 //Se itera en cada objeto asignado, siendo que hay mínimo uno
-                for(int i = 0; i < Acciones.Length; i++) {
+                for(int i = 0; i < acciones.Length; i++) {
                     //Buscamos si son objetos activables
-                    if (Acciones[i]) {
+                    if (acciones[i]) {
                         //Invertimos su estado
-                        Acciones[i].activo = !Acciones[i].activo;
+                        acciones[i].activo = !acciones[i].activo;
                     }
                 }
             }
+
+            //Invertir estado de bander
+            activo = !activo;
+
             //Cargar escena
             if (cambiarEscenas) SceneManager.LoadScene(escena);
         }

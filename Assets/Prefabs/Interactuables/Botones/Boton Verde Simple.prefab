@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5054638510774226018}
   - component: {fileID: 9216713609588774780}
   m_Layer: 0
-  m_Name: Boton Verde
+  m_Name: Boton Verde Simple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,8 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06df58d966d0c6c4aa0dd32379f8fafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activo: 1
+  activo: 0
   tiempoEspera: 0.5
-  Acciones: []
+  acciones: []
+  mantener: 0
+  valor: 1
   spriteOff: {fileID: 346053591, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
   spriteOn: {fileID: 1779732993, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
+  presionado: 0

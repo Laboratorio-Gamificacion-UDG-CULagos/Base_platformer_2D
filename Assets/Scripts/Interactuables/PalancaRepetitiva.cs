@@ -11,14 +11,14 @@ public class PalancaRepetitiva : Interactuable {
     [SerializeField] private Interactuable[] accionesIzq;
     [Tooltip("Arrastra objetos interactuables para habilitar repetidamente (derecha)")]
     [SerializeField] private Interactuable[] accionesDer;
+    [Tooltip("Valor del estado (avanzada)")]
+    [SerializeField] private bool valor = true;
     [Space(5)]
     [Tooltip("Elige el tipo de palanca (simple|avanzada)")]
     [SerializeField] private bool simple = true;
     [Space(5)]
     [Tooltip("Establecer dirección de estado (0 = izquierda)")]
     [SerializeField, Range(0, 2)] private int estado = 0;
-    [Tooltip("Valor del estado (avanzada)")]
-    [SerializeField] private bool valor = true;
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
