@@ -28,8 +28,10 @@ public class PalancaRepetitiva : Interactuable {
     [SerializeField] private Sprite spriteCen;
     [Tooltip("Arrastra un sprite a mostrar (derecha)")]
     [SerializeField] private Sprite spriteDer;
-    private Rigidbody2D rbJugador;
-    private bool enEspera = false;
+    [Tooltip("Referencía al RigidBody2D del jugador")]
+    [SerializeField] private Rigidbody2D rbJugador;
+    [Tooltip("Marca el estado actual del interactuable")]
+    [SerializeField] private bool enEspera = false;
 
     protected override void Update() {
         //Llamamos al update heredado

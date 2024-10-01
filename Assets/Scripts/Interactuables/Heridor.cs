@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Collider2D))]
 public class Heridor : Interactuable {
     [Header("Configuración del heridor")]
-    [Tooltip("Asigna un tiempo de espera del cactus")]
+    [Tooltip("Asigna un tiempo de espera del heridor")]
     [SerializeField, Min(0)] protected float tiempoEspera = 0.5f;
     [Space(5)]
     [Tooltip("Elige el valor de daño al contacto")]
@@ -18,11 +18,10 @@ public class Heridor : Interactuable {
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
-    [SerializeField] protected Transform sprite;
+    [Tooltip("Marca el estado actual del interactuable")]
     [SerializeField] protected bool enEspera = false;
-    [SerializeField] protected Vector2 direccion;
 
-    private void OnTriggerEnter2D(Collider2D colisionado) {
+    protected virtual void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
         if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
             //Actualizamos su vida

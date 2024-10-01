@@ -38,14 +38,22 @@ public class Luz : Interactuable {
     [SerializeField] private Sprite spriteOff;
     [Tooltip("Arrastra un sprite a mostrar al activarse")]
     [SerializeField] private Sprite spriteOn;
-    private Light luzComp;
-    private float intensidadFinal;
-    private float rangoFinal;
-    private Color colorFinal;
-    private int colorActualIndex = 0;
-    private float tiempoIntensidad = 0.0f;
-    private float tiempoRango = 0.0f;
-    private float tiempoColor = 0.0f;
+    [Tooltip("Indica el componente tipo Light del objeto")]
+    [SerializeField] private Light luzComp;
+    [Tooltip("Indica la intensidad actual del objeto")]
+    [SerializeField] private float intensidadFinal;
+    [Tooltip("Indica el rango actual del objeto")]
+    [SerializeField] private float rangoFinal;
+    [Tooltip("Indica el color actual del objeto")]
+    [SerializeField] private Color colorFinal;
+    [Tooltip("Indica el index del color actual del objeto")]
+    [SerializeField] private int colorActualIndex = 0;
+    [Tooltip("Indica el tiempo de cambio de intensidad actual del objeto")]
+    [SerializeField] private float tiempoIntensidad = 0.0f;
+    [Tooltip("Indica el tiempo de cambio de rango actual del objeto")]
+    [SerializeField] private float tiempoRango = 0.0f;
+    [Tooltip("Indica el tiempo de cambio de color actual del objeto")]
+    [SerializeField] private float tiempoColor = 0.0f;
 
     protected void Awake() {
         //Inicializar el componente de luz

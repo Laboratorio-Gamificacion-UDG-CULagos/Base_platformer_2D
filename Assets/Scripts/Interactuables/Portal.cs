@@ -22,8 +22,10 @@ public class Portal : Interactuable {
     [SerializeField, Min(0)] private float tiempoEspera = 1.0f;
 
     [Header("DEV (Variables de control)")]
-    private bool enEspera = false;
-    private Rigidbody2D rbJugador;
+    [Tooltip("Referencía al RigidBody2D del jugador")]
+    [SerializeField] private Rigidbody2D rbJugador;
+    [Tooltip("Marca el estado actual del interactuable")]
+    [SerializeField] private bool enEspera = false;
 
     protected void FixedUpdate() {
         //Bloqueamos si no hay conexión

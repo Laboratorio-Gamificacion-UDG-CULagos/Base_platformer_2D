@@ -8,6 +8,13 @@ public class Puas : Heridor {
     [Tooltip("Asigna un ángulo si está activa la personalización")]
     [SerializeField, Range(0, 359)] private int anguloFuerza;
 
+    [Space(20)]
+    [Header("DEV (Variables de control)")]
+    [Tooltip("Arrastra el objeto hijo que contiene el sprite")]
+    [SerializeField] private Transform sprite;
+    [Tooltip("Indica la dirección a la cual disparar")]
+    [SerializeField] private Vector2 direccion;
+
     private void OnValidate() {
         ActualizarDireccion();
     }

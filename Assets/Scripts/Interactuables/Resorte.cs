@@ -25,10 +25,14 @@ public class Resorte : Interactuable {
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
+    [Tooltip("Referencía al RigidBody2D del jugador")]
+    [SerializeField] private Rigidbody2D rbJugador;
+    [Tooltip("Marca el estado actual del interactuable")]
+    [SerializeField] private bool enEspera = false;
+    [Tooltip("Arrastra el objeto hijo que contiene el sprite del interactuable")]
     [SerializeField] private Transform sprite;
-    private bool enEspera = false;
-    private Vector2 direccion;
-    private Rigidbody2D rbJugador;
+    [Tooltip("Indica la dirección actual del funcionamiento")]
+    [SerializeField] private Vector2 direccion;
     
     private void OnValidate() {
         ActualizarDireccion();

@@ -29,11 +29,16 @@ public class Plataforma : Interactuable {
     [Space(20)]
 
     [Header("DEV (Variables de control)")]
-    private Rigidbody2D rbPlataforma;
-    private PlatformEffector2D effector;
-    private float tiempoActual;
-    private float distanciaRecorrida = 0.0f;
-    private Vector3 posicionInicial;
+    [Tooltip("Referencía al RigidBody2D de la plataforma")]
+    [SerializeField] private Rigidbody2D rbPlataforma;
+    [Tooltip("Referencía al PlatformEffector2D de la plataforma")]
+    [SerializeField] private PlatformEffector2D effector;
+    [Tooltip("Referencía al RigidBody2D de la plataforma")]
+    [SerializeField] private float tiempoActual;
+    [Tooltip("Referencía al RigidBody2D de la plataforma")]
+    [SerializeField] private float distanciaRecorrida = 0.0f;
+    [Tooltip("Referencía al RigidBody2D de la plataforma")]
+    [SerializeField] private Vector3 posicionInicial;
 
     protected void Awake() {
         //Obteniendo parametros iniciales

@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Boton : Interactuable {
@@ -26,7 +25,8 @@ public class Boton : Interactuable {
     [SerializeField] private Sprite spriteOn;
     [Tooltip("Marca como presionado mientras está en contacto")]
     [SerializeField] private bool presionado;
-    private bool enEspera = false;
+    [Tooltip("Marca el estado actual del interactuable")]
+    [SerializeField] private bool enEspera = false;
 
     protected override void Update() {
         //Llamamos a la clase heredada
