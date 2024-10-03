@@ -6,8 +6,6 @@ public class Personaje : MonoBehaviour {
     [Header("Configuración del jugador")]
     [Tooltip("Asigna tiempo en aire permitido para saltar")]
     [SerializeField] private float coyoteTime = 0.1f;
-    [Tooltip("Establece si es arrastrado por plataformas")]
-    [SerializeField] private bool moverConPlataformas = true;
     [Tooltip("Permite movimiento al estar en el aire")]
     [SerializeField] private bool movimientoAereo = false;
     [Tooltip("Habilita si puede realizar saltos en la pared")]
@@ -26,8 +24,6 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private float resistencia = 0.85f;
     [Tooltip("Establece capas de superficies que permiten la interacción para caminar")]
     [SerializeField] private LayerMask pisables;
-    [Tooltip("Establece capas de tipos de plataformas")]
-    [SerializeField] private LayerMask plataformas;
     [Tooltip("Asigna un rango de detección de superficies para caminado")]
     [SerializeField] private float largoRaycast = 0.55f;
     [Space(20)]
@@ -141,22 +137,6 @@ public class Personaje : MonoBehaviour {
         float newX = Mathf.Clamp(this.rb.velocity.x, -this.velocidadMaxima, this.velocidadMaxima);
         float newY = Mathf.Clamp(this.rb.velocity.y, -this.velocidadMaxima * 5, this.velocidadMaxima * 5);
         this.rb.velocity = new Vector2(newX, newY);
-
-        //Checar por plataformas debajo para moverse
-        if(moverConPlataformas && rb.velocity.y <= 0.05f) {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down/2, Vector2.down, this.largoRaycast, plataformas);
-            Debug.DrawRay(transform.position + Vector3.down/2, Vector2.down * this.largoRaycast, Color.green);
-            if (hit.collider != null) {
-                Rigidbody2D rbPlataforma = hit.collider.GetComponent<Rigidbody2D>();
-                if (rbPlataforma != null)
-                {
-                    //Sumar la velocidad de la plataforma en movimiento
-                    Vector2 velocidadPlataforma = rbPlataforma.velocity;
-                    Vector2 nuevaVelocidad = velocidadPlataforma;
-                    GetComponent<Rigidbody2D>().velocity += nuevaVelocidad /6.666f;
-                }
-            }
-        }
     }
 
     private bool DetectarPared(int direccion) {
@@ -170,9 +150,9 @@ public class Personaje : MonoBehaviour {
     }
 
     private bool DetectarPlataforma() {
-        Vector3 offsetRayo = Vector3.left / 5;
-        Vector3 posRayo1 = this.transform.position - offsetRayo + (Vector3.down / 2);
-        Vector3 posRayo2 = this.transform.position + offsetRayo + (Vector3.down / 2);
+        Vector2 offsetRayo = Vector2.left / 5;
+        Vector2 posRayo1 = (Vector2)transform.position - offsetRayo + (Vector2.down / 2);
+        Vector2 posRayo2 = (Vector2)transform.position + offsetRayo + (Vector2.down / 2);
 
         bool tocaIzq = DetectarIzq(posRayo1);
         bool tocaDer = DetectarDer(posRayo2);
