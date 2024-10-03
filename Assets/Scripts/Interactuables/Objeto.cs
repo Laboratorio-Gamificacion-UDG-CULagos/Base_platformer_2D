@@ -12,7 +12,7 @@ public class Objeto : Interactuable {
             //PENDIENTE AÑADIR DESENCADENAMIENTO DE ACCIONES UI
         }
 
-        //Destruye la llave milisegundos despues
+        //Destruye el objeto milisegundos despues
         Destroy(gameObject, 0.05f);
     }
 }

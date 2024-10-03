@@ -46,11 +46,11 @@ public class PalancaRepetitiva : Interactuable {
     }
 
     private void EjecucionRepetida(Interactuable[] acciones, bool estado) {
-        //Activamos los objetos que son activables
-        if(acciones.Length > 0) { 
+        //Activamos los objetos que son interactuables
+        if (acciones.Length > 0) { 
             //Se itera en cada objeto asignado, siendo que hay mínimo uno
             for(int i = 0; i < acciones.Length; i++) {
-                //Buscamos si son objetos activables
+                //Buscamos si son objetos interactuables
                 if (acciones[i]) {
                     //Marcamos su estado
                     acciones[i].activo = estado;
@@ -67,6 +67,7 @@ public class PalancaRepetitiva : Interactuable {
 
             //Comparamos direcciones
             if (!simple) {
+                //Sistema avanzado de asignación
                 if(estado == 1) {
                     if (rbJugador.velocity.x > 0.0f) {
                         GetComponent<SpriteRenderer>().sprite = spriteDer;
@@ -75,6 +76,7 @@ public class PalancaRepetitiva : Interactuable {
                         GetComponent<SpriteRenderer>().sprite = spriteIzq;
                         estado--;
                     }
+                //Sistemas avanzados de reset
                 } else if (estado == 0 && rbJugador.velocity.x > 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteCen;
                     estado++;
@@ -85,6 +87,7 @@ public class PalancaRepetitiva : Interactuable {
                     EjecucionRepetida(accionesDer, !valor);
                 }
             } else {
+                //Sistema de intermitencia simple
                 if (estado == 0 && rbJugador.velocity.x > 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteDer;
                     estado = 2;
@@ -101,14 +104,14 @@ public class PalancaRepetitiva : Interactuable {
         }
     }
 
-    public IEnumerator TiempoDeEspera(float time) {
-        //Activar el tiempo de espera del botón
+    private IEnumerator TiempoDeEspera(float time) {
+        //Activar el tiempo de espera
         enEspera = true;
 
         //Esperar el tiempo definido
         yield return new WaitForSeconds(time);
         
-        //Desactivar el tiempo de espera del botón
+        //Desactivar el tiempo de espera
         enEspera = false;
     }
 }

@@ -28,7 +28,7 @@ public class Puerta : Interactuable {
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Checamos colisiones con jugadores
         if (colisionado.CompareTag("Jugador") && activo) {
-            //Cargar escena
+            //Cargar una escena si se habilita
             if (cambiarEscenas) SceneManager.LoadScene(escena);
         }
     }

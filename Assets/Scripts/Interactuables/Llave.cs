@@ -13,11 +13,11 @@ public class Llave : Objeto {
 
         //Detecta colisiones con el jugador
         if(colisionado.CompareTag("Jugador")) {
-            //Activamos los objetos que son activables
-            if(acciones.Length > 0 && desencadenador) {
+            //Activamos los objetos que son interactuables
+            if (acciones.Length > 0 && desencadenador) {
                 //Se itera en cada objeto asignado, siendo que hay mínimo uno
                 for (int i = 0; i < acciones.Length; i++) {
-                    //Buscamos si son objetos activables
+                    //Buscamos si son objetos interactuables
                     if (acciones[i]) {
                         //Invertimos su estado
                         acciones[i].activo = !acciones[i].activo;

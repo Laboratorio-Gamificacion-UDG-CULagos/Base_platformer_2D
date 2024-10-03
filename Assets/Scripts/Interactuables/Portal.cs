@@ -61,21 +61,19 @@ public class Portal : Interactuable {
     private Vector2 AnguloADireccion(float angulo) {
         //Convertimos el angulo a coordenadas
         float radianes = (angulo + 90) * Mathf.Deg2Rad;
-
-        //Obtenemos las coordenadas
         float x = Mathf.Cos(radianes);
         float y = Mathf.Sin(radianes);
         return new Vector2(x, y).normalized;
     }
 
     public IEnumerator TiempoDeEspera(float time) {
-        //Activar el tiempo de espera del portal
+        //Activar el tiempo de espera
         enEspera = true;
 
         //Esperar el tiempo definido
         yield return new WaitForSeconds(time);
 
-        //Desactivar el tiempo de espera del portal
+        //Desactivar el tiempo de espera
         enEspera = false;
     }
     
@@ -83,8 +81,9 @@ public class Portal : Interactuable {
         //Salir si el portal no está activo
         if (!activo || enEspera) return;
 
-        //Detectar si es un jugador lo que toca
+        //Comparamos si es un jugador
         if (colisionado.CompareTag("Jugador")) {
+            //Referenciamos el rigidbody del jugador
             rbJugador = colisionado.GetComponent<Rigidbody2D>();
         }
     }
@@ -96,7 +95,7 @@ public class Portal : Interactuable {
             Gizmos.DrawLine(transform.position, portalSalida.transform.position);
         }
 
-        //Visualizamos la dirección de salida del portal
+        //Visualizamos la dirección de salida
         if (conservarInercia && redirigir) {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, (Vector2)transform.position + (AnguloADireccion(angulo) * multiplicadorInercia));

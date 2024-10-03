@@ -37,19 +37,19 @@ public class Heridor : Interactuable {
                 colisionado.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
 
-            //Establecemos en espera de las púas
+            //Establecemos en espera del heridor
             StartCoroutine(TiempoDeEspera(tiempoEspera));
         }
     }
 
     protected virtual IEnumerator TiempoDeEspera(float espera) {
-        //Activar el tiempo de espera del resorte
+        //Activar el tiempo de espera
         enEspera = true;
 
         //Espera el tiempo especificado
         yield return new WaitForSeconds(espera);
 
-        //Desactivar el tiempo de espera del resorte
+        //Desactivar el tiempo de espera
         enEspera = false;
     }
 }

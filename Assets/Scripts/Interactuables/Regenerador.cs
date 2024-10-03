@@ -7,7 +7,7 @@ public class Regenerador : Objeto {
 
         //Detecta colisiones con el jugador
         if (colisionado.CompareTag("Jugador")) {
-            //Acutalizamos su vida
+            //Acutalizamos sla vida del jugador
             colisionado.GetComponent<Personaje>().vida += valor;
         }
     }

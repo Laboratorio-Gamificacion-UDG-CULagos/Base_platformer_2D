@@ -36,43 +36,25 @@ public class PalancaAlternante : Interactuable {
         base.Update();
     }
 
-    private void EjecucionCompleja(Interactuable[] acciones) {
-        //Activamos los objetos que son activables
-        if(acciones.Length > 0) { 
+    private void EjecucionIndividual(Interactuable[] acciones) {
+        //Activamos los objetos que son interactuables
+        if (acciones.Length > 0) { 
             //Se itera en cada objeto asignado, siendo que hay mínimo uno
             for(int i = 0; i < acciones.Length; i++) {
-                //Buscamos si son objetos activables
+                //Buscamos si son objetos interactuables
                 if (acciones[i]) {
-                    //Marcamos su estado
+                    //Invertimos el estado
                     acciones[i].activo = !acciones[i].activo;
                 }
             }
         }
     }
 
-    private void EjecucionSimple() {
-        //Activamos los objetos que son activables
-        if(accionesDer.Length > 0) { 
-            //Se itera en cada objeto asignado, siendo que hay mínimo uno
-            for(int i = 0; i < accionesDer.Length; i++) {
-                //Buscamos si son objetos activables
-                if (accionesDer[i]) {
-                    //Marcamos su estado
-                    accionesDer[i].activo = !accionesDer[i].activo;
-                }
-            }
-        }
-        //Activamos los objetos que son activables
-        if(accionesIzq.Length > 0) { 
-            //Se itera en cada objeto asignado, siendo que hay mínimo uno
-            for(int i = 0; i < accionesIzq.Length; i++) {
-                //Buscamos si son objetos activables
-                if (accionesIzq[i]) {
-                    //Marcamos su estado
-                    accionesIzq[i].activo = !accionesIzq[i].activo;
-                }
-            }
-        }
+    private void EjecucionTotal() {
+        //Activamos los objetos que son interactuables de derecha
+        EjecucionIndividual(accionesDer);
+        //Activamos los objetos que son interactuables de izquierda
+        EjecucionIndividual(accionesDer);
     }
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
@@ -83,6 +65,7 @@ public class PalancaAlternante : Interactuable {
 
             //Comparamos direcciones
             if (!simple) {
+                //Sistema avanzado de asignación
                 if(estado == 1) {
                     if (rbJugador.velocity.x > 0.0f) {
                         GetComponent<SpriteRenderer>().sprite = spriteDer;
@@ -91,24 +74,26 @@ public class PalancaAlternante : Interactuable {
                         GetComponent<SpriteRenderer>().sprite = spriteIzq;
                         estado--;
                     }
+                //Sistemas avanzados de reset
                 } else if (estado == 0 && rbJugador.velocity.x > 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteCen;
                     estado++;
-                    EjecucionCompleja(accionesIzq);
+                    EjecucionIndividual(accionesIzq);
                 } else if (estado == 2 && rbJugador.velocity.x < 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteCen;
                     estado--;
-                    EjecucionCompleja(accionesDer);
+                    EjecucionIndividual(accionesDer);
                 }
             } else {
+                //Sistema de intermitencia simple
                 if (estado == 0 && rbJugador.velocity.x > 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteDer;
                     estado = 2;
-                    EjecucionSimple();
+                    EjecucionTotal();
                 } else if (estado == 2 && rbJugador.velocity.x < 0.0f) {
                     GetComponent<SpriteRenderer>().sprite = spriteIzq;
                     estado = 0;
-                    EjecucionSimple();
+                    EjecucionTotal();
                 }
             }
 
@@ -117,14 +102,14 @@ public class PalancaAlternante : Interactuable {
         }
     }
 
-    public IEnumerator TiempoDeEspera(float time) {
-        //Activar el tiempo de espera del botón
+    private IEnumerator TiempoDeEspera(float time) {
+        //Activar el tiempo de espera
         enEspera = true;
 
         //Esperar el tiempo definido
         yield return new WaitForSeconds(time);
         
-        //Desactivar el tiempo de espera del botón
+        //Desactivar el tiempo de espera
         enEspera = false;
     }
 }

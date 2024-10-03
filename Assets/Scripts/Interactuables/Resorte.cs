@@ -46,13 +46,13 @@ public class Resorte : Interactuable {
         //Obtener la rotación Z del objeto y ajustar el ángulo de lanzamiento
         if (!anguloPersonalizado) anguloFuerza = (int)transform.eulerAngles.z % 359;
 
-        //Calcula la dirección de la normal del resorte según el ángulo
+        //Calcula la dirección de la normal del objeto según el ángulo
         float radianes = (anguloFuerza + 90) * Mathf.Deg2Rad;
         direccion = new Vector2(Mathf.Cos(radianes), Mathf.Sin(radianes));
     }
 
     private IEnumerator TiempoDeEspera(float espera) {
-        //Activar el tiempo de espera del resorte
+        //Activar el tiempo de espera
         enEspera = true;
 
         //Baja su sprite si está asignado
@@ -67,7 +67,7 @@ public class Resorte : Interactuable {
             yield return null;
         }
 
-        //Desactivar el tiempo de espera del resorte
+        //Desactivar el tiempo de espera
         enEspera = false;
     }
     
@@ -82,8 +82,6 @@ public class Resorte : Interactuable {
 
             //Reflejamos la velocidad del jugador en relación a la normal (rebote)
             Vector2 velocidadReflejada = Vector2.Reflect(velocidadJugador, direccion);
-
-            //Aplicamos la velocidad reflejada al jugador
             rbJugador.velocity = velocidadReflejada;
 
             //Limitamos el movimiento vertical al doble de la fuerza del resorte si está habilitado

@@ -33,7 +33,7 @@ public class Puas : Heridor {
     }
 
     protected override IEnumerator TiempoDeEspera(float espera) {
-        //Activar el tiempo de espera del resorte
+        //Activar el tiempo de espera
         enEspera = true;
 
         //Baja su sprite si está asignado
@@ -42,7 +42,7 @@ public class Puas : Heridor {
         //Espera el tiempo especificado
         yield return new WaitForSeconds(espera);
 
-        //Desactivar el tiempo de espera del resorte
+        //Desactivar el tiempo de espera
         enEspera = false;
 
         //Regresa a la posición original el sprite si existe
@@ -53,7 +53,7 @@ public class Puas : Heridor {
     }
 
     private void OnDrawGizmos() {
-        //Visualizamos la dirección de salida de las púas
+        //Visualizamos la dirección de salida
         Gizmos.color = Color.red;
         Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + direccion / 2);
     }

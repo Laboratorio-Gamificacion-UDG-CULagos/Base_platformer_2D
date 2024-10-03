@@ -37,11 +37,11 @@ public class Boton : Interactuable {
     }
     
     private void InvertirAcciones() {
-        //Activamos los objetos que son activables
+        //Activamos los objetos que son interactuables
         if (acciones.Length > 0) {
             //Se itera en cada objeto asignado, siendo que hay mínimo uno
             for (int i = 0; i < acciones.Length; i++) {
-                //Buscamos si son objetos activables
+                //Buscamos si son objetos interactuables
                 if (acciones[i]) {
                     //Invertimos su estado
                     acciones[i].activo = !acciones[i].activo;
@@ -51,13 +51,13 @@ public class Boton : Interactuable {
     }
 
     private void MantenerAcciones(bool estado) {
-        //Activamos los objetos que son activables
+        //Activamos los objetos que son interactuables
         if (acciones.Length > 0) {
             //Se itera en cada objeto asignado, siendo que hay mínimo uno
             for (int i = 0; i < acciones.Length; i++) {
-                //Buscamos si son objetos activables
+                //Buscamos si son objetos interactuables
                 if (acciones[i]) {
-                    //Invertimos su estado
+                    //Asignamos el estado solicitado
                     acciones[i].activo = estado;
                 }
             }
@@ -65,7 +65,7 @@ public class Boton : Interactuable {
     }
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
-        //Detectamos la colisión con el jugador
+        //Detectamos la colisión con el jugador y disponibilidad
         if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
             //Si permite mantener pulsaciones 
             if (mantener) {
@@ -83,7 +83,7 @@ public class Boton : Interactuable {
     }
 
     private void OnTriggerExit2D(Collider2D colisionado) {
-        //Detectamos la colisión con el jugador
+        //Detectamos la falta de colisión con el jugador
         if (colisionado.CompareTag("Jugador") && activo) {
             if (mantener) {
                 //Establecemos en espera del botón
@@ -92,15 +92,15 @@ public class Boton : Interactuable {
         }
     }
 
-    public IEnumerator TiempoDeEspera(float time) {
-        //Activar el tiempo de espera del botón
+    private IEnumerator TiempoDeEspera(float time) {
+        //Activar el tiempo de espera
         enEspera = true;
         GetComponent<SpriteRenderer>().sprite = spriteOn;
 
         //Esperar el tiempo definido
         yield return new WaitForSeconds(time);
         
-        //Desactivar el tiempo de espera del botón
+        //Desactivar el tiempo de espera
         enEspera = false;
         GetComponent<SpriteRenderer>().sprite = spriteOff;
 
@@ -111,15 +111,15 @@ public class Boton : Interactuable {
         InvertirAcciones();
     }
 
-    public IEnumerator TiempoActivo(float time) {
-        //Activar el tiempo de espera del botón
+    private IEnumerator TiempoActivo(float time) {
+        //Activar el tiempo de espera
         presionado = true;
         GetComponent<SpriteRenderer>().sprite = spriteOn;
 
         //Esperar el tiempo definido
         yield return new WaitForSeconds(time);
         
-        //Desactivar el tiempo de espera del botón
+        //Desactivar el tiempo de espera
         enEspera = false;
         GetComponent<SpriteRenderer>().sprite = spriteOff;
 
