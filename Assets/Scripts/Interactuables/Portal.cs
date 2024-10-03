@@ -66,17 +66,6 @@ public class Portal : Interactuable {
         return new Vector2(x, y).normalized;
     }
 
-    public IEnumerator TiempoDeEspera(float time) {
-        //Activar el tiempo de espera
-        enEspera = true;
-
-        //Esperar el tiempo definido
-        yield return new WaitForSeconds(time);
-
-        //Desactivar el tiempo de espera
-        enEspera = false;
-    }
-    
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Salir si el portal no está activo
         if (!activo || enEspera) return;
@@ -86,6 +75,17 @@ public class Portal : Interactuable {
             //Referenciamos el rigidbody del jugador
             rbJugador = colisionado.GetComponent<Rigidbody2D>();
         }
+    }
+    
+    private IEnumerator TiempoDeEspera(float time) {
+        //Activar el tiempo de espera
+        enEspera = true;
+
+        //Esperar el tiempo definido
+        yield return new WaitForSeconds(time);
+
+        //Desactivar el tiempo de espera
+        enEspera = false;
     }
     
     private void OnDrawGizmos() {

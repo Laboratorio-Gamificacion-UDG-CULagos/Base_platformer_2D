@@ -13,6 +13,11 @@ public class Bandera : Interactuable {
     [SerializeField] private bool cambiarEscenas = false;
     [Tooltip("Arrastra la escena (en Build) para ser cargada")]
     [SerializeField] private string escena;
+    [Space(10)]
+    [Tooltip("Arrastra un sprite a mostrar al marcarse")]
+    [SerializeField] private GameManager nivel;
+    [Tooltip("Inserta el valor (ascendente) el checkpoint")]
+    [SerializeField, Min(1)] private int valor = 1;
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
@@ -21,13 +26,22 @@ public class Bandera : Interactuable {
     [Tooltip("Arrastra un sprite a mostrar al marcarse")]
     [SerializeField] private Sprite spriteMarcada;
 
+    private void Awake() {
+        if (!nivel) {
+            nivel = FindObjectOfType<GameManager>();
+        }
+    }
+
     protected override void Update() {
         //Llamamos al update heredado
         base.Update();
 
+        //Actualizamos segun el nivel
+        if (nivel && nivel.AvanceActual() >= valor) marcada = true;
+
         //Animamos el estado de la bandera
-        if (marcada && activo) GetComponent<SpriteRenderer>().sprite = spriteDefault;
-        else GetComponent<SpriteRenderer>().sprite = spriteMarcada;
+        if (marcada) GetComponent<SpriteRenderer>().sprite = spriteMarcada;
+        else GetComponent<SpriteRenderer>().sprite = spriteDefault;
     }
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
@@ -45,8 +59,12 @@ public class Bandera : Interactuable {
                 }
             }
 
-            //Invertir estado de bander
+            //Invertir estado de la bandera
             activo = !activo;
+
+            //Marcamos la bandera y recordamos posición
+            marcada = !marcada;
+            nivel.CheckPoint(transform.position, valor);
 
             //Cargar una escena si se habilita
             if (cambiarEscenas) SceneManager.LoadScene(escena);

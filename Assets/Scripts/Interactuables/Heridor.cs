@@ -25,7 +25,7 @@ public class Heridor : Interactuable {
         //Detectamos la colisión con el jugador
         if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
             //Actualizamos su vida
-            colisionado.GetComponent<Personaje>().vida -= golpe;
+            colisionado.GetComponent<Personaje>().Herir(golpe);
 
             //Checamos si habilita repeler
             if (repeler) {

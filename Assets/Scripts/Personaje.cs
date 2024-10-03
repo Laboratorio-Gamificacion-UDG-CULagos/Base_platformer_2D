@@ -13,6 +13,8 @@ public class Personaje : MonoBehaviour {
     [Tooltip("Habilita si puede realizar saltos en la pared")]
     [SerializeField] private bool saltoEnPared = false;
     [Tooltip("Limita de vida base del personaje")]
+    [SerializeField] public int vidaBase = 6;
+    [Tooltip("Establece vida actual del personaje")]
     [SerializeField] public int vida = 6;
     [Tooltip("Asigna una fuerza para movimiento horizontal")]
     [SerializeField] private float fuerzaMovimiento = 0.9f;
@@ -32,16 +34,24 @@ public class Personaje : MonoBehaviour {
 
     //Variables de funcionamiento
     [Header("DEV (Variables de control)")]
+    [SerializeField] private GameManager nivel;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Animator ani;
-    [SerializeField] private RectTransform hud; // PENDIENTE
+    [SerializeField] private RectTransform vidas; // PENDIENTE
+    [SerializeField] private RectTransform fondos; // PENDIENTE
     [SerializeField] private GameObject prefabBala; // PENDIENTE
     [SerializeField] private float velocidadBala = 20.0f; // PENDIENTE
     [SerializeField] private float beelX = 0.0f;
     [SerializeField] private float inputX = 0.0f;
     [SerializeField] private float airTime = 0.0f;
     [SerializeField] private bool parado = false;
+    [SerializeField] private bool cambioEscena = false;
+
+    private void Start() {
+        //Definimos el controlador de juego actual
+        if (!nivel) nivel = FindAnyObjectByType<GameManager>();
+    }
 
     private void Update() {
         //Detección de piso
@@ -85,6 +95,11 @@ public class Personaje : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             //Debug.Log(hit1.collider.gameObject.name); //?
         };
+    }
+
+    private void LateUpdate() {
+        //Comprobamos vida después
+        ComprobarVida();
     }
 
     private void FixedUpdate() {
@@ -181,15 +196,24 @@ public class Personaje : MonoBehaviour {
         return hit.collider != null && rb.velocity.y <= 0.1f;
     }
 
-    public void Herir() {
+    private void ComprobarVida() {
+        //Actualizar UI
+        this.vidas.sizeDelta = new Vector2(50.0f * this.vida, 50.0f);
+        this.fondos.sizeDelta = new Vector2(50.0f * this.vidaBase, 50.0f);
+    }
+
+    public void Herir(int valor) {
         //Disminuir vida
-        if (this.vida > 1) {
-            this.vida--;
-            this.hud.sizeDelta = new Vector2(50.0f * this.vida, 100.0f);
-        //Muerte
+        if (this.vida >= 1) {
+            //Herimos al jugador
+            this.vida -= valor;
         }
-        else {
-            this.GetComponent<ControlEscenas>().CambiarEscena();
+        if (vida <= 0) { 
+            //Reiniciamos desde el ultimo punto de control
+            vida = vidaBase;
+            if (nivel) transform.position = nivel.SpawnPoint();
+            if (cambioEscena) this.GetComponent<ControlEscenas>().CambiarEscena();
+            rb.Sleep();
         }
     }
 
@@ -200,9 +224,9 @@ public class Personaje : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D colisionado) {
-        //Detectar daños
-        if(colisionado.gameObject.CompareTag("Enemigo")) {
-            this.Herir();
+        //Detectar daños TEMPORAL PARA ENEMIGOS
+        if (colisionado.gameObject.CompareTag("Enemigo")) {
+            this.Herir(1);
         }
     }
 }

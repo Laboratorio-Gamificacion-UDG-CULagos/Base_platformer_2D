@@ -51,26 +51,6 @@ public class Resorte : Interactuable {
         direccion = new Vector2(Mathf.Cos(radianes), Mathf.Sin(radianes));
     }
 
-    private IEnumerator TiempoDeEspera(float espera) {
-        //Activar el tiempo de espera
-        enEspera = true;
-
-        //Baja su sprite si está asignado
-        if (sprite) sprite.position += (Vector3)direccion * 0.2f;
-
-        //Espera el tiempo especificado
-        yield return new WaitForSeconds(espera);
-
-        //Regresa a la posición original el sprite si existe
-        while (sprite && sprite.localPosition.y > 0.0f) {
-            sprite.position = Vector2.MoveTowards(sprite.position, transform.position, 0.01f);
-            yield return null;
-        }
-
-        //Desactivar el tiempo de espera
-        enEspera = false;
-    }
-    
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
         if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
@@ -94,7 +74,27 @@ public class Resorte : Interactuable {
             StartCoroutine(TiempoDeEspera(tiempoEspera));
         }
     }
+    
+    private IEnumerator TiempoDeEspera(float espera) {
+        //Activar el tiempo de espera
+        enEspera = true;
 
+        //Baja su sprite si está asignado
+        if (sprite) sprite.position += (Vector3)direccion * 0.2f;
+
+        //Espera el tiempo especificado
+        yield return new WaitForSeconds(espera);
+
+        //Regresa a la posición original el sprite si existe
+        while (sprite && sprite.localPosition.y > 0.0f) {
+            sprite.position = Vector2.MoveTowards(sprite.position, transform.position, 0.01f);
+            yield return null;
+        }
+
+        //Desactivar el tiempo de espera
+        enEspera = false;
+    }
+    
     private void OnDrawGizmos() {
         //Visualizamos la dirección de salida del portal
         Gizmos.color = Color.red;
