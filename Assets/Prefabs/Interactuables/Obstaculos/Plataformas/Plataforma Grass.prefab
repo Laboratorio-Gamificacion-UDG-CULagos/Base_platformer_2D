@@ -96,7 +96,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548217485710108291}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -192,24 +192,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activo: 1
-  esEstatica: 0
+  estatica: 0
   velocidad: 1
   moviendoDerecha: 1
   cambiarPorTiempo: 0
   cambiarPorDistancia: 1
-  distancia: 5
-  tiempoDeCambio: 5
+  tiempoGiro: 0.1
+  distancia: 1
+  tiempoCambio: 5
   colisiones:
     serializedVersion: 2
     m_Bits: 72
   unidireccional: 1
+  cargar: 1
+  dinamica: 0
+  tiempoCaida: 1
+  tiempoSpawn: 2.5
+  enEspera: 0
+  direccion: 1
   rbPlataforma: {fileID: 0}
   effector: {fileID: 0}
   tiempoActual: 0
   distanciaRecorrida: 0
   posicionInicial: {x: 0, y: 0}
-  posicionAnterior: {x: 0, y: 0}
-  deltaPosicion: {x: 0, y: 0}
-  arrastrables:
-    serializedVersion: 2
-    m_Bits: 128
+  arrastrables: []

@@ -145,8 +145,8 @@ public class Personaje : MonoBehaviour {
         Vector2 origenRaycast = new Vector2(this.transform.position.x + (direccion * 0.16f), this.transform.position.y);
         RaycastHit2D hit = Physics2D.Raycast(origenRaycast + (Vector2.down / 2), Vector2.right * direccion, 0.1f, pisables);
         //Physics2D.queriesHitTriggers = true; //?
-        Debug.DrawRay(origenRaycast + (Vector2.down / 2), Vector2.right * direccion * 0.1f, Color.red);
-        return hit.collider != null;
+        Debug.DrawRay(origenRaycast + (Vector2.down / 2), 0.1f * direccion * Vector2.right, Color.red);
+        return hit.collider && !hit.collider.usedByEffector;
     }
 
     private bool DetectarPlataforma() {
