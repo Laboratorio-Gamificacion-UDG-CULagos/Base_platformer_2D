@@ -16,6 +16,16 @@ public class Boton : Interactuable {
     [SerializeField] private bool mantener = false;
     [Tooltip("Establece una duración (en segundos) para pulsaciones alternantes")]
     [SerializeField, Min(0)] private float duracion = 1.0f;
+    [Space(5)]
+    [Tooltip("Permite la medición fuerza para activar el botón")]
+    [SerializeField] private bool resistir = true;
+    [Tooltip("Establece una velocidad necesaria para activar")]
+    [SerializeField, Min(0)] private float fuerza = 1.0f;
+    [Space(5)]
+    [Tooltip("Permite la medición de pesos para activar el botón")]
+    [SerializeField] private bool pesar = true;
+    [Tooltip("Establece una cantidad de peso suficiente para activar")]
+    [SerializeField, Min(0)] private float peso = 1.0f;
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
@@ -67,17 +77,20 @@ public class Boton : Interactuable {
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador y disponibilidad
         if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
-            //Si permite mantener pulsaciones 
-            if (mantener) {
-                //Animamos presion sobre el boton
-                enEspera = true;
-                GetComponent<SpriteRenderer>().sprite = spriteOn;
+            if((resistir && colisionado.attachedRigidbody.velocity.y < fuerza) ||
+               (pesar && colisionado.attachedRigidbody.mass >= peso)) {
+                //Si permite mantener pulsaciones 
+                if (mantener) {
+                    //Animamos presion sobre el boton
+                    enEspera = true;
+                    GetComponent<SpriteRenderer>().sprite = spriteOn;
 
-                //Establecemos presionado el boton
-                presionado = true;
-            } else {
-                //Activar momentáneamente el boton
-                StartCoroutine(TiempoActivo(duracion));
+                    //Establecemos presionado el boton
+                    presionado = true;
+                } else {
+                    //Activar momentáneamente el boton
+                    StartCoroutine(TiempoActivo(duracion));
+                }
             }
         }
     }
@@ -85,7 +98,7 @@ public class Boton : Interactuable {
     private void OnTriggerExit2D(Collider2D colisionado) {
         //Detectamos la falta de colisión con el jugador
         if (colisionado.CompareTag("Jugador") && activo) {
-            if (mantener) {
+            if (mantener && presionado) {
                 //Establecemos en espera del botón
                 StartCoroutine(TiempoDeEspera(0.5f - tiempoEspera));
             }

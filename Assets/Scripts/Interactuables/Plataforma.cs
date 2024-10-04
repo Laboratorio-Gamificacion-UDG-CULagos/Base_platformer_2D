@@ -44,6 +44,10 @@ public class Plataforma : Interactuable {
     [Header("DEV (Variables de control)")]
     [Tooltip("Marca el estado actual del interactuable")]
     [SerializeField] protected bool enEspera = false;
+    [Tooltip("Marca el estado actual del interactuable")]
+    [SerializeField] protected bool enGiro = false;
+    [Tooltip("Marca el estado actual del interactuable")]
+    [SerializeField] protected bool enCaida = false;
     [Tooltip("Marca el estado default de la direccion")]
     [SerializeField] protected bool direccion = true;
     [Tooltip("Referencía al RigidBody2D de la plataforma")]
@@ -63,40 +67,63 @@ public class Plataforma : Interactuable {
         //Checamos que tenga la información correcta
         if (!rbPlataforma) rbPlataforma = GetComponent<Rigidbody2D>();
         if (!effector) effector = GetComponent<PlatformEffector2D>();
+    }
 
+    private void Start() {
         //Obteniendo parámetros iniciales
         posicionInicial = transform.position;
         direccion = moviendoDerecha;
+
+        //Establecemos valor por default
+        if (estatica) rbPlataforma.bodyType = RigidbodyType2D.Static;
+
+        //Comenzamos su comportamiento
+        if (activo && !estatica && !enGiro) MoverPlataforma();
     }
 
     protected override void Update() {
         //Llamamos al base heredada para conservar el comportamiento
         base.Update();
 
-        //Comportamiento base
-        if (!estatica && activo && !enEspera) MoverPlataforma();
-
         //Actualizar funcion del usuario
         if (effector) effector.enabled = unidireccional;
+
+        //Comportamiento base
+        if (activo && !estatica && !enGiro && !enEspera) DetectarLimites();
     }
     
     private void FixedUpdate() {
         //Movemos los objetos con los que tocamos
-        if (activo && !estatica && !enEspera) MoverObjetos();
+        if (activo && !estatica && !enGiro) MoverObjetos();
+
+        //Detener cuando sea estatica
+        if (estatica && rbPlataforma.bodyType != RigidbodyType2D.Static && !enEspera) rbPlataforma.bodyType = RigidbodyType2D.Static;
     }
 
-    private bool DetectarMuro(int dir) {
+    private bool DetectarMuro(int direccion) {
         //Raycasteamos para detectar un muro en la direccion que avanza
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left * dir, 0.5f * GetComponent<SpriteRenderer>().size.x, colisiones);
-        return hit.collider != null;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * direccion, 0.5f * GetComponent<SpriteRenderer>().size.x, colisiones);
+        return hit.collider;
     }
 
     private void MoverPlataforma() {
         //Claculamos el control de movimiento
-        float direccion = moviendoDerecha ? 1 : -1;
-        Vector2 fuerza = new Vector2(direccion * velocidad, rbPlataforma.velocity.y);
+        int direccion = moviendoDerecha ? 1 : -1;
+        Vector2 fuerza = new(direccion * velocidad, rbPlataforma.velocity.y);
+
+        //Movimiento base
+        rbPlataforma.velocity = fuerza;
+    }
+
+    private void DetectarLimites() {
+        int direccion = moviendoDerecha ? 1 : -1;
+        Vector2 fuerza = new(direccion * velocidad, rbPlataforma.velocity.y);
+
         //Detectamos muros por cercanía
-        bool hayMuro = DetectarMuro(moviendoDerecha ? -1 : 1);
+        bool hayMuro = DetectarMuro(direccion);
+
+        //Detener en limite para evitar caída
+        if (hayMuro && enCaida) return;
 
         //Cooldown para cambio de direccion
         if (cambiarPorTiempo) {
@@ -109,12 +136,10 @@ public class Plataforma : Interactuable {
         //Procesamiento para cambio por distancia y colisión
         distanciaRecorrida += Mathf.Abs(fuerza.x * Time.deltaTime);
         if (cambiarPorDistancia && distanciaRecorrida >= distancia || hayMuro) CambiarDireccion();
-
-        //Movimiento base
-        rbPlataforma.velocity = fuerza;
     }
 
     private void MoverObjetos() {
+        //Revisamos si existen objetos
         if (arrastrables.Count > 0 && cargar) { 
             //Movemos cada objeto sobre la plataforma
             foreach (Rigidbody2D objeto in arrastrables) {
@@ -125,7 +150,7 @@ public class Plataforma : Interactuable {
     }
 
     private void CambiarDireccion() {
-        //Establecemos en espera del heridor
+        //Establecemos en espera el objeto
         StartCoroutine(TiempoDeGiro(tiempoGiro));
 
         //Invertir direcciones
@@ -134,22 +159,28 @@ public class Plataforma : Interactuable {
     }
 
     private void ResetAvance() {
-        //Reset de variables
+        //Resets de variables
         tiempoActual = tiempoCambio;
         distanciaRecorrida = 0.0f;
-        rbPlataforma.velocity = Vector2.zero;
+
+        //Resets de movimientos
+        rbPlataforma.bodyType = RigidbodyType2D.Kinematic;
+        if (enEspera) rbPlataforma.velocity = Vector2.zero;
+        rbPlataforma.gravityScale = 0;
     }
 
     private void OnCollisionEnter2D(Collision2D colisionado) {
         //Verificamos si estamos tocando un objeto arrastrable
         if (activo && (effector.colliderMask & (1 << colisionado.gameObject.layer)) > 0) {
             //Comprobamos si es posible arrastrarlo con su RigidBody2D
-            if (colisionado.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rbObjeto)) {
-                //Añadimos nuestro objeto a la lista de arrastrables si está en posición
-                if (rbObjeto.position.y > transform.position.y + GetComponent<SpriteRenderer>().size.y) arrastrables.Add(rbObjeto);
+            Rigidbody2D rbObjeto = colisionado.rigidbody;
+
+            //Añadimos nuestro objeto a la lista de arrastrables si está en posición
+            if (rbObjeto.position.y > transform.position.y + GetComponent<SpriteRenderer>().size.y) {
+                arrastrables.Add(rbObjeto);
 
                 //Manejamos la lógica de plataformas dinámcias
-                if (colisionado.gameObject.CompareTag("Jugador") && dinamica && !enEspera && rbObjeto.velocity.y <= 0) StartCoroutine(TiempoDeCaida(tiempoCaida));
+                if (colisionado.gameObject.CompareTag("Jugador") && dinamica && rbObjeto.velocity.y <= 0 && !enCaida) StartCoroutine(TiempoDeCaida(tiempoCaida));
             }
         }
     }
@@ -166,42 +197,58 @@ public class Plataforma : Interactuable {
     
     protected virtual IEnumerator TiempoDeGiro(float espera) {
         //Activar el tiempo de espera
-        enEspera = true;
+        enGiro = true;
+        //Detenemos el movimiento temporalmente
+        rbPlataforma.velocity = Vector2.zero;
 
         //Espera el tiempo especificado
         yield return new WaitForSeconds(espera);
 
         //Desactivar el tiempo de espera
-        enEspera = false;
+        enGiro = false;
+        //Reactivamos el movimiento
+        MoverPlataforma();
     }
 
     protected virtual IEnumerator TiempoDeCaida(float espera) {
+        //Activar el tiempo de espera
+        enCaida = true;
+
+        //Espera el tiempo especificado
+        yield return new WaitForSeconds(espera);
+        
+        //Hacemos caer la plataforma
+        rbPlataforma.bodyType = RigidbodyType2D.Dynamic;
+        rbPlataforma.gravityScale = 2;
+
+        //Desactivar el tiempo de espera
+        enCaida = false;
+        //Ponemos en periodo de reaparecimiento
+        StartCoroutine(TiempoDeEspera(tiempoSpawn));
+    }
+    
+    protected virtual IEnumerator TiempoDeEspera(float espera) {
         //Cambiamos forma de funcionamiento
         enEspera = true;
 
         //Espera el tiempo especificado
         yield return new WaitForSeconds(espera);
 
+        //Hacemos reset de spawneo
+        ResetAvance();
         //Desactivar el tiempo de espera
-        rbPlataforma.gravityScale = 1;
-        StartCoroutine(TiempoDeEspera(tiempoSpawn));
-    }
-    
-    protected virtual IEnumerator TiempoDeEspera(float espera) {
-        //Espera el tiempo especificado
-        yield return new WaitForSeconds(espera);
-
-        //Desactivar el tiempo de espera
-        rbPlataforma.gravityScale = 0;
         enEspera = false;
+
+        //Reiniciamos valores extra
         transform.position = posicionInicial;
         moviendoDerecha = direccion;
-        ResetAvance();
+        //Reactivamos el movimiento
+        MoverPlataforma();
     }
 
     private void OnDrawGizmos() {
         //Mostramos en el Editor los Rays de dirección
-        Debug.DrawRay(transform.position, (moviendoDerecha ? -1 : 1) * 0.5f * GetComponent<SpriteRenderer>().size.x * Vector2.left, Color.red);
+        Debug.DrawRay(transform.position, (moviendoDerecha ? 1 : -1) * 0.5f * GetComponent<SpriteRenderer>().size.x * Vector2.right, Color.red);
 
         //Mostramos la dirección y magnitud del delta
         Debug.DrawRay(transform.position, (moviendoDerecha ? 2 : -2) * Time.deltaTime * velocidad * Vector2.left, Color.blue);
