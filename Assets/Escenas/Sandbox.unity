@@ -1807,6 +1807,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2002861623042762474, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4736797841714205009, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_Name
       value: Jugador
@@ -1827,6 +1831,14 @@ PrefabInstance:
       propertyPath: fondos
       value: 
       objectReference: {fileID: 1890317868}
+    - target: {fileID: 5267087246649873038, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: fuerzaSalto
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267087246649873038, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: pisables.m_Bits
+      value: 16842824
+      objectReference: {fileID: 0}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
