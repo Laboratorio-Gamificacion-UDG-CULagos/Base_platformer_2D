@@ -7,8 +7,8 @@ public class Resorte : Interactuable {
     [Space(5)]
     [Tooltip("Elige si respeta un angulo personalizado")]
     [SerializeField] private bool anguloPersonalizado;
-    [Tooltip("Asigna un ángulo si está activa la personalización"), Range(0, 359)]
-    [SerializeField] private int anguloFuerza;
+    [Tooltip("Asigna un ángulo si está activa la personalización")]
+    [SerializeField, Range(0, 359)] private int anguloFuerza;
     [Space(5)]
     [Tooltip("Elige para usar una fuerza de lanzamiento")]
     [SerializeField] private bool arrojar = true;
@@ -25,7 +25,7 @@ public class Resorte : Interactuable {
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
-    [Tooltip("Referencía al sprite renderer del resorte")]
+    [Tooltip("Referencía al sprite renderer del objeto")]
     [SerializeField] private SpriteRenderer sp;
     [Tooltip("Marca el estado actual del interactuable")]
     [SerializeField] private bool enEspera = false;

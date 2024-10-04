@@ -1837,7 +1837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5267087246649873038, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: pisables.m_Bits
-      value: 16842824
+      value: 50331720
       objectReference: {fileID: 0}
     - target: {fileID: 5570467128255185752, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_LocalPosition.x

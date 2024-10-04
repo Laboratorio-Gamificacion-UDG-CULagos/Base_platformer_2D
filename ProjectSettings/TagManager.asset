@@ -22,14 +22,14 @@ TagManager:
   - Piso
   - Entidad
   - Portal
-  - Recolectable
+  - 
   - Resorte
   - Llave
   - Trampa
   - Antorcha
   - Puerta
   - Bandera
-  - Muro
+  - 
   - Estrella
   - Moneda
   - Joya
@@ -38,7 +38,7 @@ TagManager:
   - Heridor
   - Generador
   - Puente
-  - 
+  - Bloque
   - 
   - 
   - 
