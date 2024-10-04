@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Resorte : Interactuable {
     [Header("Configuración del resorte")]
     [Space(5)]
@@ -25,21 +25,36 @@ public class Resorte : Interactuable {
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
-    [Tooltip("Referencía al RigidBody2D del jugador")]
-    [SerializeField] private Rigidbody2D rbJugador;
+    [Tooltip("Referencía al sprite renderer del resorte")]
+    [SerializeField] private SpriteRenderer sp;
     [Tooltip("Marca el estado actual del interactuable")]
     [SerializeField] private bool enEspera = false;
-    [Tooltip("Arrastra el objeto hijo que contiene el sprite del interactuable")]
-    [SerializeField] private Transform sprite;
+    [Tooltip("Arrastra el sprite para mostrar por default")]
+    [SerializeField] private Sprite spriteDefault;
+    [Tooltip("Arrastra el sprite para mostrar en espera")]
+    [SerializeField] private Sprite spriteEspera;
     [Tooltip("Indica la dirección actual del funcionamiento")]
     [SerializeField] private Vector2 direccion;
     
     private void OnValidate() {
         ActualizarDireccion();
     }
-    
+
+    private void Awake() {
+        //Obtenemos parámetros iniciales
+        if (!sp) sp = GetComponent<SpriteRenderer>();
+    }
+
     protected void Start() {
         ActualizarDireccion();
+    }
+
+    protected override void Update() {
+        //Llamamos al método del que hereda
+        base.Update();
+
+        if (enEspera || !activo) sp.sprite = spriteEspera;
+        else if(!enEspera) sp.sprite = spriteDefault;
     }
 
     private void ActualizarDireccion() {
@@ -55,7 +70,7 @@ public class Resorte : Interactuable {
         //Detectamos la colisión con el jugador
         if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
             //Referenciamos al jugador
-            rbJugador = colisionado.GetComponent<Rigidbody2D>();
+            Rigidbody2D rbJugador = colisionado.GetComponent<Rigidbody2D>();
 
             //Obtenemos la velocidad del jugador
             Vector2 velocidadJugador = rbJugador.velocity;
@@ -79,17 +94,8 @@ public class Resorte : Interactuable {
         //Activar el tiempo de espera
         enEspera = true;
 
-        //Baja su sprite si está asignado
-        if (sprite) sprite.position += (Vector3)direccion * 0.2f;
-
         //Espera el tiempo especificado
         yield return new WaitForSeconds(espera);
-
-        //Regresa a la posición original el sprite si existe
-        while (sprite && sprite.localPosition.y > 0.0f) {
-            sprite.position = Vector2.MoveTowards(sprite.position, transform.position, 0.01f);
-            yield return null;
-        }
 
         //Desactivar el tiempo de espera
         enEspera = false;
