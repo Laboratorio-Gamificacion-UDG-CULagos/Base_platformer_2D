@@ -30,7 +30,21 @@ public class PalancaAlternante : Interactuable {
     [SerializeField] private Rigidbody2D rbJugador;
     [Tooltip("Marca el estado actual del interactuable")]
     [SerializeField] private bool enEspera = false;
-
+    
+    private void Start() {
+        //Inicializamos su estado
+        switch (estado) { 
+            case 0:
+                GetComponent<SpriteRenderer>().sprite = spriteIzq;
+                break;
+            case 1:
+                GetComponent<SpriteRenderer>().sprite = spriteCen;
+                break;
+            case 2:
+                GetComponent<SpriteRenderer>().sprite = spriteDer;
+                break;
+        }
+    }
     protected override void Update() {
         //Llamamos al update heredado
         base.Update();
@@ -54,7 +68,7 @@ public class PalancaAlternante : Interactuable {
         //Activamos los objetos que son interactuables de derecha
         EjecucionIndividual(accionesDer);
         //Activamos los objetos que son interactuables de izquierda
-        EjecucionIndividual(accionesDer);
+        EjecucionIndividual(accionesIzq);
     }
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
@@ -70,9 +84,11 @@ public class PalancaAlternante : Interactuable {
                     if (rbJugador.velocity.x > 0.0f) {
                         GetComponent<SpriteRenderer>().sprite = spriteDer;
                         estado++;
+                        EjecucionIndividual(accionesDer);
                     } else if (rbJugador.velocity.x < 0.0f) {
                         GetComponent<SpriteRenderer>().sprite = spriteIzq;
                         estado--;
+                        EjecucionIndividual(accionesIzq);
                     }
                 //Sistemas avanzados de reset
                 } else if (estado == 0 && rbJugador.velocity.x > 0.0f) {

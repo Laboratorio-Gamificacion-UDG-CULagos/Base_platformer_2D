@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1348892831094026703}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1696354994, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
+  m_Sprite: {fileID: -993522116, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,9 +147,11 @@ MonoBehaviour:
   tiempoEspera: 0.5
   accionesIzq: []
   accionesDer: []
+  valor: 1
   simple: 1
   estado: 0
-  valor: 1
   spriteIzq: {fileID: 1011722303, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
   spriteCen: {fileID: 1696354994, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
   spriteDer: {fileID: -993522116, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
+  rbJugador: {fileID: 0}
+  enEspera: 0

@@ -33,6 +33,21 @@ public class PalancaRepetitiva : Interactuable {
     [Tooltip("Marca el estado actual del interactuable")]
     [SerializeField] private bool enEspera = false;
 
+    private void Start() {
+        //Inicializamos su estado
+        switch (estado) { 
+            case 0:
+                GetComponent<SpriteRenderer>().sprite = spriteIzq;
+                break;
+            case 1:
+                GetComponent<SpriteRenderer>().sprite = spriteCen;
+                break;
+            case 2:
+                GetComponent<SpriteRenderer>().sprite = spriteDer;
+                break;
+        }
+    }
+
     protected override void Update() {
         //Llamamos al update heredado
         base.Update();
