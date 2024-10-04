@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5023307171870020043}
   - component: {fileID: 5213652548091759569}
   m_Layer: 0
-  m_Name: PaletaPlatformer
+  m_Name: Mapa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
