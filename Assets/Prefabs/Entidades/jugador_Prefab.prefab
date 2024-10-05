@@ -102,8 +102,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
-  m_LinearDrag: 0.1
+  m_Mass: 1
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
   m_Material: {fileID: 0}
@@ -196,31 +196,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coyoteTime: 0.1
-  moverConPlataformas: 1
   movimientoAereo: 1
   saltoEnPared: 1
+  vidaBase: 6
   vida: 6
   fuerzaMovimiento: 1
   velocidadMaxima: 5
-  fuerzaSalto: 10
-  resistencia: 0.85
+  influenciaAerea: 0.1
+  fuerzaSalto: 8
+  resistencia: 0.75
   pisables:
     serializedVersion: 2
-    m_Bits: 65609
-  plataformas:
-    serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 50331720
   largoRaycast: 0.55
+  nivel: {fileID: 0}
   rb: {fileID: 2002861623042762474}
   sr: {fileID: 5683096783900120633}
   ani: {fileID: 8177754970193200380}
-  hud: {fileID: 0}
+  vidas: {fileID: 0}
+  fondos: {fileID: 0}
   prefabBala: {fileID: 1460131358709708144, guid: ebf6a075a01bedb4ab6e907ffb8d63ab, type: 3}
   velocidadBala: 20
   beelX: 0
   inputX: 0
   airTime: 0
   parado: 0
+  cambioEscena: 0
 --- !u!114 &5764734688219971851
 MonoBehaviour:
   m_ObjectHideFlags: 0

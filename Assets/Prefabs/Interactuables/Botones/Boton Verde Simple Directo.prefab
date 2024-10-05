@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3487014062229309452}
   - component: {fileID: 9216713609588774780}
   m_Layer: 9
-  m_Name: Boton Verde Simple
+  m_Name: Boton Verde Simple Directo
   m_TagString: Interactuable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

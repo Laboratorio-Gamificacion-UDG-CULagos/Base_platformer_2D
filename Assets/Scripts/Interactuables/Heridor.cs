@@ -32,7 +32,7 @@ public class Heridor : Interactuable {
                 Rigidbody2D rbJugador = colisionado.GetComponent<Rigidbody2D>();
                 Vector2 nuevaVelocidad = new Vector2(-rbJugador.velocity.x, -rbJugador.velocity.y / 5) * factorRepulsion;
                 rbJugador.velocity = nuevaVelocidad;
-                rbJugador.AddForce(Vector2.up * 500 * factorRepulsion, ForceMode2D.Impulse);
+                rbJugador.AddForce(Vector2.up * 5 * factorRepulsion, ForceMode2D.Impulse);
             } else if (detener) {
                 colisionado.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }

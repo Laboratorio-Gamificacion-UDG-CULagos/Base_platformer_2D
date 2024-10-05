@@ -18,6 +18,8 @@ public class Personaje : MonoBehaviour {
     [SerializeField] private float fuerzaMovimiento = 0.9f;
     [Tooltip("Asigna una velocidad máxima para movimiento")]
     [SerializeField] private float velocidadMaxima = 15.0f;
+    [Tooltip("Asigna una reducción para la velocidad en el aire")]
+    [SerializeField] private float influenciaAerea = 0.1f;
     [Tooltip("Asigna una fuerza para saltar")]
     [SerializeField] private float fuerzaSalto = 10.0f;
     [Tooltip("Establece un multiplicador al movimiento sobre superficies")]
@@ -112,14 +114,14 @@ public class Personaje : MonoBehaviour {
         //Movimiento lateral
         if (Mathf.Sqrt(Mathf.Pow(this.rb.velocity.x, 2)) < this.velocidadMaxima) {
             //Calcular velocidades
-            float movimientoHorizontal = (parado || movimientoAereo) ? this.inputX * this.fuerzaMovimiento : this.inputX * this.fuerzaMovimiento / 10.0f;
+            float movimientoHorizontal = (parado || movimientoAereo) ? this.inputX * this.fuerzaMovimiento : this.inputX * this.fuerzaMovimiento * influenciaAerea;
             Vector2 movTotal;
             //Velocidad si toca el piso
             if (parado) {
                 movTotal = new Vector2(movimientoHorizontal + (this.rb.velocity.x * this.resistencia), this.rb.velocity.y);
             //Velocidad estando en el aire
             } else {
-                movimientoHorizontal *= 0.3f;
+                movimientoHorizontal *= resistencia * 0.5f;
                 movTotal = new Vector2(movimientoHorizontal + this.rb.velocity.x, this.rb.velocity.y);
             }
             //Asignar nueva velocidad
@@ -129,7 +131,7 @@ public class Personaje : MonoBehaviour {
             //Deslizamiento por pared
             if (!parado && this.rb.velocity.y < 0.0f) {
                 if ((this.rb.velocity.x < -0.01f && DetectarPared(-1)) || (this.rb.velocity.x > 0.01f && DetectarPared(1))) {
-                    this.rb.velocity = new Vector2(this.rb.velocity.x, this.rb.velocity.y / 2.0f);
+                    this.rb.velocity = new Vector2(this.rb.velocity.x, this.rb.velocity.y * 0.5f);
                 }
             }
         }
@@ -151,16 +153,18 @@ public class Personaje : MonoBehaviour {
 
     private bool DetectarPlataforma() {
         Vector2 offsetRayo = Vector2.left / 5;
-        Vector2 posRayo1 = (Vector2)transform.position - offsetRayo + (Vector2.down / 2);
-        Vector2 posRayo2 = (Vector2)transform.position + offsetRayo + (Vector2.down / 2);
+        Vector2 posRayo0 = (Vector2)transform.position - (Vector2.up * 0.5f) - offsetRayo;
+        Vector2 posRayo1 = (Vector2)transform.position - (Vector2.up * 0.5f);
+        Vector2 posRayo2 = (Vector2)transform.position - (Vector2.up * 0.5f) + offsetRayo;
 
-        bool tocaIzq = DetectarIzq(posRayo1);
+        bool tocaIzq = DetectarIzq(posRayo0);
+        bool tocaCen = DetectarDer(posRayo1);
         bool tocaDer = DetectarDer(posRayo2);
 
-        return tocaIzq || tocaDer;
+        return tocaIzq || tocaCen || tocaDer;
     }
-
-    private bool DetectarIzq(Vector3 posRayo) {
+    
+    private bool DetectarIzq(Vector2 posRayo) {
         //Physics2D.queriesHitTriggers = false; //?
         RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?
@@ -168,7 +172,15 @@ public class Personaje : MonoBehaviour {
         return hit.collider != null && rb.velocity.y <= 0.1f;
     }
 
-    private bool DetectarDer(Vector3 posRayo) {
+    private bool DetectarCen(Vector2 posRayo) {
+        //Physics2D.queriesHitTriggers = false; //?
+        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
+        //Physics2D.queriesHitTriggers = true; //?
+        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue);
+        return hit.collider != null && rb.velocity.y <= 0.1f;
+    }
+
+    private bool DetectarDer(Vector2 posRayo) {
         //Physics2D.queriesHitTriggers = false; //?
         RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?

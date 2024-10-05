@@ -27,11 +27,15 @@ public class Plataforma : Interactuable {
     [Space(5)]
     [Tooltip("Asignar capas de redirección por colisión")]
     [SerializeField] private LayerMask colisiones;
+    [Tooltip("Asignar capas de derribo por colisión")]
+    [SerializeField] private LayerMask derribadores;
     [Space(5)]
     [Tooltip("Establecer direccionalidad")]
     [SerializeField] private bool unidireccional = false;
     [Tooltip("Permite arrastrado de objetos cargados")]
     [SerializeField] private bool cargar = true;
+    [Tooltip("Permite lanzar objetos con mayor fuerza según el movimiento")]
+    [SerializeField] private bool inercia = false;
     [Space(5)]
     [Tooltip("Permite plataformas con caída")]
     [SerializeField] private bool dinamica = false;
@@ -39,19 +43,21 @@ public class Plataforma : Interactuable {
     [SerializeField, Min(0)] protected float tiempoCaida = 1.0f;
     [Tooltip("Asigna un tiempo de espera para reaparecer (dinámica)")]
     [SerializeField, Min(0)] protected float tiempoSpawn = 2.5f;
-    [Space(20)]
 
+    [Space(20)]
     [Header("DEV (Variables de control)")]
     [Tooltip("Marca el estado actual del interactuable")]
-    [SerializeField] protected bool enEspera = false;
+    [SerializeField] private bool enEspera = false;
     [Tooltip("Marca el estado actual del interactuable")]
-    [SerializeField] protected bool enGiro = false;
+    [SerializeField] private bool enGiro = false;
     [Tooltip("Marca el estado actual del interactuable")]
-    [SerializeField] protected bool enCaida = false;
+    [SerializeField] private bool enCaida = false;
     [Tooltip("Marca el estado default de la direccion")]
-    [SerializeField] protected bool direccion = true;
+    [SerializeField] private bool direccion = true;
     [Tooltip("Referencía al RigidBody2D de la plataforma")]
     [SerializeField] private Rigidbody2D rbPlataforma;
+    [Tooltip("Referencía al SpriteRenderer de la plataforma")]
+    [SerializeField] private SpriteRenderer sr;
     [Tooltip("Referencía al PlatformEffector2D de la plataforma")]
     [SerializeField] private PlatformEffector2D effector;
     [Tooltip("Marca el tiempo que lleva en movimiento desde el último giro")]
@@ -66,6 +72,7 @@ public class Plataforma : Interactuable {
     protected void Awake() {
         //Checamos que tenga la información correcta
         if (!rbPlataforma) rbPlataforma = GetComponent<Rigidbody2D>();
+        if (!sr) sr = GetComponent<SpriteRenderer>();
         if (!effector) effector = GetComponent<PlatformEffector2D>();
     }
 
@@ -176,21 +183,26 @@ public class Plataforma : Interactuable {
             Rigidbody2D rbObjeto = colisionado.rigidbody;
 
             //Añadimos nuestro objeto a la lista de arrastrables si está en posición
-            if (rbObjeto.position.y > transform.position.y + GetComponent<SpriteRenderer>().size.y) {
+            if (rbObjeto.position.y > transform.position.y + sr.size.y) {
+                //Lo añadimos a los objetos colisionando
                 arrastrables.Add(rbObjeto);
 
-                //Manejamos la lógica de plataformas dinámcias
-                if (colisionado.gameObject.CompareTag("Jugador") && dinamica && rbObjeto.velocity.y <= 0 && !enCaida) StartCoroutine(TiempoDeCaida(tiempoCaida));
+                //Manejamos la lógica de plataformas dinámicas
+                if ((derribadores & (1 << rbObjeto.gameObject.layer)) > 0 && dinamica && rbObjeto.velocity.y <= 0 && !enCaida) StartCoroutine(TiempoDeCaida(tiempoCaida));
             }
         }
     }
 
     private void OnCollisionExit2D(Collision2D colisionado) {
         //Comprobamos que es posible arrastrarlo con su RigidBody2D
-        if (colisionado.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rbObjeto)) {
+        if (activo && colisionado.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rbObjeto)) {
             //Añadimos nuestro objeto a la lista de arrastrables
             if (arrastrables.Contains(rbObjeto)) {
+                //Lo quitamos de nuestros objetos en colision
                 arrastrables.Remove(rbObjeto);
+
+                //Lo lanzamos cuando está habilitado
+                if (inercia && !enGiro && rbObjeto.velocity.y > 0) rbObjeto.velocity += (moviendoDerecha ? 1 : -1) * velocidad * Vector2.right;
             }
         }
     }
