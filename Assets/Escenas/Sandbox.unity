@@ -1811,6 +1811,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2002861623042762474, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4736797841714205009, guid: 0074452513f74eb4f8e6bc4cca954863, type: 3}
       propertyPath: m_Name
       value: Jugador

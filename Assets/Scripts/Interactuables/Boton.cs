@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Boton : Interactuable {
@@ -26,9 +28,18 @@ public class Boton : Interactuable {
     [SerializeField] private bool pesar = true;
     [Tooltip("Establece una cantidad de peso suficiente para activar")]
     [SerializeField, Min(0)] private float peso = 1.0f;
+    [Space(5)]
+    [Tooltip("Permite arroijar lejos luego de desactivarse")]
+    [SerializeField] private bool rebote = false;
+    [Tooltip("Establece una cantidad de fuerza")]
+    [SerializeField, Min(0)] private float impulso = 1.0f;
 
     [Space(20)]
     [Header("DEV (Variables de control)")]
+    [Tooltip("Hace referencia al Rigidbodies que presionan")]
+    [SerializeField] private List<Rigidbody2D> rbs;
+    [Tooltip("Marca las capas que pueden activar el botón")]
+    [SerializeField] private LayerMask activadores;
     [Tooltip("Arrastra un sprite a mostrar default")]
     [SerializeField] private Sprite spriteOff;
     [Tooltip("Arrastra un sprite a mostrar al activarse")]
@@ -76,13 +87,27 @@ public class Boton : Interactuable {
 
     private void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador y disponibilidad
-        if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
-            if((resistir && colisionado.attachedRigidbody.velocity.y < fuerza) ||
+        if ((activadores & (1 << colisionado.gameObject.layer)) > 0 && !enEspera) {
+            //Guardamos el objeto que entra activo o no
+            rbs.Add(colisionado.attachedRigidbody);
+            //Manipulamos los controles por peso o fuerza
+            if((resistir && colisionado.attachedRigidbody.velocity.y <= -fuerza) ||
                (pesar && colisionado.attachedRigidbody.mass >= peso)) {
                 //Si permite mantener pulsaciones 
                 if (mantener) {
                     //Animamos presion sobre el boton
-                    enEspera = true;
+                    GetComponent<SpriteRenderer>().sprite = spriteOn;
+
+                    //Establecemos presionado el boton
+                    presionado = true;
+                } else {
+                    //Activar momentáneamente el boton
+                    StartCoroutine(TiempoActivo(duracion));
+                }
+            } else if (activo && !resistir && !pesar) {
+                //Si permite mantener pulsaciones 
+                if (mantener) {
+                    //Animamos presion sobre el boton
                     GetComponent<SpriteRenderer>().sprite = spriteOn;
 
                     //Establecemos presionado el boton
@@ -95,12 +120,48 @@ public class Boton : Interactuable {
         }
     }
 
+    private void OnTriggerStay2D(Collider2D colisionado) {
+        //Detectamos la falta de colisión con el jugador
+        if ((activadores & (1 << colisionado.gameObject.layer)) > 0 && activo) {
+            //Comprobamos para botones sostenidos con cargas y velocidades
+            if (mantener && presionado && rbs.Count == 0 &&
+                ((pesar && colisionado.attachedRigidbody.mass < peso)
+                || (resistir && colisionado.attachedRigidbody.velocity.y <= -fuerza))) {
+                //Lo quitamos de la lista
+                rbs.Remove(colisionado.attachedRigidbody);
+                //Lo lanzamos si esta habilitado
+                if(rebote) colisionado.attachedRigidbody.velocity = new(colisionado.attachedRigidbody.velocity.x, impulso);
+            //Comprobamos si queda algún objeto que mantenga la presión
+            } else if (mantener && presionado && rebote && rbs.Count >= 1) {
+                //Revisamos cada objeto tocando
+                foreach (Rigidbody2D rb in rbs) {
+                    if ((pesar && colisionado.attachedRigidbody.mass >= peso)
+                || (resistir && colisionado.attachedRigidbody.velocity.y > -fuerza)) return; //Cancelamos si lo hay
+                }
+                //Empujamos cada rb si no
+                foreach (Rigidbody2D rb in rbs) {
+                    rb.velocity = new(rb.velocity.x, impulso);
+                }
+                //Limpiamos la lista
+                rbs.Clear();
+            }
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D colisionado) {
         //Detectamos la falta de colisión con el jugador
-        if (colisionado.CompareTag("Jugador") && activo) {
-            if (mantener && presionado) {
+        if ((activadores & (1 << colisionado.gameObject.layer)) > 0 && activo) {
+            //Eliminamos el objeto que sale
+            if (rbs.Contains(colisionado.attachedRigidbody)) rbs.Remove(colisionado.attachedRigidbody);
+            //Se deja de mantener cuando es el último y está presionado
+            if (mantener && presionado && rbs.Count == 0) {
                 //Establecemos en espera del botón
-                StartCoroutine(TiempoDeEspera(0.5f - tiempoEspera));
+                StartCoroutine(TiempoDeEspera(tiempoEspera));
+                //Lanzamos el ultimo si está habilitado
+                if (rebote) {
+                    colisionado.attachedRigidbody.velocity = new(colisionado.attachedRigidbody.velocity.x, impulso);
+                    if (rbs.Contains(colisionado.attachedRigidbody)) rbs.Remove(colisionado.attachedRigidbody);
+                }
             }
         }
     }
@@ -118,7 +179,16 @@ public class Boton : Interactuable {
         GetComponent<SpriteRenderer>().sprite = spriteOff;
 
         //Cancelamos la activación
-        if (presionado) presionado = false;
+        if (presionado && rbs.Count < 1) presionado = false;
+
+        //Si existen objetos, son empujados cuando se habilita
+        if (rebote && rbs.Count >= 1) {
+            //Empujamos cada rb
+            foreach (Rigidbody2D rb in rbs) {
+                rb.velocity = new(rb.velocity.x, impulso);
+            }
+            rbs.Clear();
+        }
 
         //Reiniciamos el valor de las acciones
         InvertirAcciones();
@@ -137,6 +207,6 @@ public class Boton : Interactuable {
         GetComponent<SpriteRenderer>().sprite = spriteOff;
 
         //Establecemos en espera del botón
-        StartCoroutine(TiempoDeEspera(0.5f - tiempoEspera));
+        StartCoroutine(TiempoDeEspera(tiempoEspera));
     }
 }
