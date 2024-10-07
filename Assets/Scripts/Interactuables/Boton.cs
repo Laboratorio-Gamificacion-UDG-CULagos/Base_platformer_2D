@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Boton : Interactuable {

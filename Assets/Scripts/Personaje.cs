@@ -105,7 +105,7 @@ public class Personaje : MonoBehaviour {
         this.ani.SetBool("saltando", this.airTime >= this.coyoteTime);
 
         //Salto
-        if (Input.GetAxis("Vertical") > 0.05f && (!this.ani.GetBool("saltando") || (this.rb.velocity.y < -0.05f && saltoEnPared && (DetectarPared(-1) || DetectarPared(1))))) {
+        if (Input.GetAxis("Vertical") > 0.05f && (parado || (this.rb.velocity.y < -0.05f && saltoEnPared && (DetectarPared(-1) || DetectarPared(1))))) {
             if (saltoEnPared && (DetectarPared(-1) || DetectarPared(1)) && this.rb.velocity.y < -0.05f) this.rb.velocity += Vector2.right * (this.sr.flipX? 5 : -5);
             this.rb.velocity = new Vector2(this.rb.velocity.x, this.fuerzaSalto);
             //this.rb.AddForce(salto, ForceMode2D.Impulse);
@@ -157,35 +157,19 @@ public class Personaje : MonoBehaviour {
         Vector2 posRayo1 = (Vector2)transform.position - (Vector2.up * 0.5f);
         Vector2 posRayo2 = (Vector2)transform.position - (Vector2.up * 0.5f) + offsetRayo;
 
-        bool tocaIzq = DetectarIzq(posRayo0);
-        bool tocaCen = DetectarDer(posRayo1);
-        bool tocaDer = DetectarDer(posRayo2);
+        bool tocaIzq = RaycastDeteccion(posRayo0);
+        bool tocaCen = RaycastDeteccion(posRayo1);
+        bool tocaDer = RaycastDeteccion(posRayo2);
 
         return tocaIzq || tocaCen || tocaDer;
     }
     
-    private bool DetectarIzq(Vector2 posRayo) {
+    private bool RaycastDeteccion(Vector2 posRayo) {
         //Physics2D.queriesHitTriggers = false; //?
         RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
         //Physics2D.queriesHitTriggers = true; //?
         Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue);
-        return hit.collider != null && rb.velocity.y <= 0.1f;
-    }
-
-    private bool DetectarCen(Vector2 posRayo) {
-        //Physics2D.queriesHitTriggers = false; //?
-        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
-        //Physics2D.queriesHitTriggers = true; //?
-        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue);
-        return hit.collider != null && rb.velocity.y <= 0.1f;
-    }
-
-    private bool DetectarDer(Vector2 posRayo) {
-        //Physics2D.queriesHitTriggers = false; //?
-        RaycastHit2D hit = Physics2D.Raycast(posRayo, Vector2.down, this.largoRaycast, pisables);
-        //Physics2D.queriesHitTriggers = true; //?
-        Debug.DrawRay(posRayo, Vector2.down * this.largoRaycast, Color.blue); //?
-        return hit.collider != null && rb.velocity.y <= 0.1f;
+        return hit.collider && rb.velocity.y <= 0.5;
     }
 
     private void ComprobarVida() {

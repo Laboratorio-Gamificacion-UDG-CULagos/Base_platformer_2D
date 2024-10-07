@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Resorte : Interactuable {
