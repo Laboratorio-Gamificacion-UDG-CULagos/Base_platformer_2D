@@ -144,11 +144,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activo: 1
+  heribles:
+    serializedVersion: 2
+    m_Bits: 128
   tiempoEspera: 0.5
   golpe: 1
   repeler: 1
   factorRepulsion: 1
   detener: 0
-  sprite: {fileID: 0}
   enEspera: 0
-  direccion: {x: 0, y: 0}

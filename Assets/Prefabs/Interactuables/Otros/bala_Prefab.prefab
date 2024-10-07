@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1460131358709708147}
   - component: {fileID: 1460131358709708146}
-  - component: {fileID: 1460131358709708149}
   - component: {fileID: 8893050868249881921}
   - component: {fileID: 1336823299080733577}
+  - component: {fileID: 1460131358709708149}
   m_Layer: 0
   m_Name: bala_Prefab
   m_TagString: Proyectil
@@ -87,19 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1460131358709708149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1460131358709708144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5a1dfb79ca984469623a8ef7a02f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteImpacto: {fileID: 21300000, guid: e060628a5f437ac4491a9a8121b83db1, type: 3}
 --- !u!50 &8893050868249881921
 Rigidbody2D:
   serializedVersion: 4
@@ -162,3 +149,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.75, y: 0.35}
   m_Direction: 1
+--- !u!114 &1460131358709708149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460131358709708144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5a1dfb79ca984469623a8ef7a02f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteImpacto: {fileID: 21300000, guid: e060628a5f437ac4491a9a8121b83db1, type: 3}

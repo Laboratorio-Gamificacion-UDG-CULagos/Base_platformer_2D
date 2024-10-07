@@ -48,9 +48,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2234015196423697452, guid: 48dd77f0f0903144bb1418ab66341bcf, type: 3}
+      propertyPath: heribles.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 3172873931041306092, guid: 48dd77f0f0903144bb1418ab66341bcf, type: 3}
       propertyPath: m_Name
-      value: Heridor Variant
+      value: Lava Baja
       objectReference: {fileID: 0}
     - target: {fileID: 3522176751738627581, guid: 48dd77f0f0903144bb1418ab66341bcf, type: 3}
       propertyPath: m_Sprite

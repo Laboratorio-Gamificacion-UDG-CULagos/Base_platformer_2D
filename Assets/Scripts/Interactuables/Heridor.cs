@@ -4,15 +4,18 @@ using System.Collections;
 [RequireComponent(typeof(Collider2D))]
 public class Heridor : Interactuable {
     [Header("Configuración del heridor")]
+    [Tooltip("Asignar capas de heridos por colisión")]
+    [SerializeField] private LayerMask heribles;
     [Tooltip("Asigna un tiempo de espera del heridor")]
     [SerializeField, Min(0)] protected float tiempoEspera = 0.5f;
-    [Space(5)]
     [Tooltip("Elige el valor de daño al contacto")]
     [SerializeField, Min(0)] protected int golpe = 1;
+    [Space(5)]
     [Tooltip("Permite lanzar al jugador de regreso")]
     [SerializeField] protected bool repeler;
     [Tooltip("Agrega un multiplicador de repulsión")]
     [SerializeField, Min(0)] protected float factorRepulsion = 1.0f;
+    [Space(5)]
     [Tooltip("Anula el movimiento del jugador")]
     [SerializeField] protected bool detener;
 
@@ -23,9 +26,11 @@ public class Heridor : Interactuable {
 
     protected virtual void OnTriggerEnter2D(Collider2D colisionado) {
         //Detectamos la colisión con el jugador
-        if (colisionado.CompareTag("Jugador") && !enEspera && activo) {
+        if (((heribles & (1 << colisionado.gameObject.layer)) > 0) && !enEspera && activo) {
             //Actualizamos su vida
-            colisionado.GetComponent<Personaje>().Herir(golpe);
+            if (colisionado.TryGetComponent<Personaje>(out Personaje p)) {
+                p.Herir(golpe);
+            }
 
             //Checamos si habilita repeler
             if (repeler) {

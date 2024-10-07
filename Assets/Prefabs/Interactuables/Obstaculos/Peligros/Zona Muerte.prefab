@@ -91,6 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activo: 1
+  heribles:
+    serializedVersion: 2
+    m_Bits: 128
   tiempoEspera: 0.1
   golpe: 100
   repeler: 1

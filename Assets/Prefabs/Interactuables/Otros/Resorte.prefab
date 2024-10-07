@@ -144,15 +144,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activo: 1
+  instantaneo: 1
+  lanzables:
+    serializedVersion: 2
+    m_Bits: 0
   anguloPersonalizado: 0
   anguloFuerza: 0
   arrojar: 1
   factorLanzamiento: 0.1
   tiempoEspera: 0.5
+  tiempoProceso: 0.5
   limitar: 1
   limitador: 20
-  sp: {fileID: 0}
+  sp: {fileID: 3528561728775053720}
+  rbs: []
   enEspera: 0
+  porLanzar: 0
   spriteDefault: {fileID: 862700526, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
   spriteEspera: {fileID: -1462742125, guid: e2130e84f8b1a104c9b90d5d7d135178, type: 3}
+  spriteCarga: {fileID: 21300000, guid: a3cca0a2369a11e43aa3c28d21ae5c4f, type: 3}
   direccion: {x: -0.00000004371139, y: 1}
