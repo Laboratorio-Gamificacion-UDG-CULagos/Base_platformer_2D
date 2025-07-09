@@ -1,4 +1,4 @@
-\# Base para juego platformer 2D
+# Base para juego platformer 2D
 
 
 
@@ -16,7 +16,7 @@ Desarrollado en la versión 2022.3 de Unity.
 
 
 
-\## Prefabs incluidos
+## Prefabs incluidos
 
 
 
@@ -26,7 +26,7 @@ El proyecto incluye los siguientes prefabs:
 
 
 
-\### Objetos interactuables
+### Objetos interactuables
 
 
 
@@ -34,7 +34,7 @@ Objetos no activos en la escena que afectan el entorno o al jugador de alguna fo
 
 
 
-\#### Antorchas
+#### Antorchas
 
 
 
@@ -48,7 +48,7 @@ opciones de desarrollador adicionales.
 
 
 
-\#### Banderas
+#### Banderas
 
 
 
@@ -56,7 +56,7 @@ Objetos que pueden activar a otros objetos o cambiar la escena.
 
 
 
-El script \*\*Bandera\*\* tiene las siguientes opciones:
+El script **Bandera** tiene las siguientes opciones:
 
 
 
@@ -70,11 +70,11 @@ El script \*\*Bandera\*\* tiene las siguientes opciones:
 
 
 
-\#### Botones
+#### Botones
 
 
 
-Hay 4 variantes. \*\*Simples\*\* y \*\*avanzados\*\* que además pueden ser \*\*directos\*\* o \*\*resistentes\*\*.
+Hay 4 variantes. **Simples** y **avanzados** que además pueden ser **directos** o **resistentes**.
 
 La diferencia entre los botones simples y avanzados son las opciones adicionales de desarrollador.
 
@@ -82,7 +82,7 @@ La diferencia entre los botones directos y resistentes es el valor de la opción
 
 
 
-El script \*\*Boton\*\* tiene las siguientes opciones:
+El script **Boton** tiene las siguientes opciones:
 
 
 
@@ -104,7 +104,7 @@ El script \*\*Boton\*\* tiene las siguientes opciones:
 
 
 
-\#### Enlaces
+#### Enlaces
 
 
 
@@ -112,7 +112,7 @@ Conectan diferentes partes del nivel
 
 
 
-\#### Objetos
+#### Objetos
 
 
 
@@ -120,7 +120,7 @@ Recolectables que se pueden poner en el nivel.
 
 
 
-\#### Obstáculos
+#### Obstáculos
 
 
 
@@ -128,7 +128,7 @@ Se dividen en 3 categorías:
 
 
 
-\##### Bloques
+##### Bloques
 
 
 
@@ -136,7 +136,7 @@ Se pueden utilizar para bloquear partes del escenario hasta que se active un obj
 
 
 
-\##### Peligros
+##### Peligros
 
 
 
@@ -144,7 +144,7 @@ Hacen daño al jugador.
 
 
 
-\##### Plataformas
+##### Plataformas
 
 
 
@@ -152,11 +152,11 @@ Pueden conectar partes del escenario separadas por espacios vacíos.
 
 
 
-\#### Palancas
+#### Palancas
 
 
 
-Hay 4 variantes. \*\*Simples\*\* y \*\*avanzadas\*\* que además pueden ser \*\*alternantes\*\* o \*\*repetitivas\*\*.
+Hay 4 variantes. **Simples** y **avanzadas** que además pueden ser **alternantes** o **repetitivas**.
 
 La diferencia entre las palancas simples y avanzados son las opciones adicionales de desarrollador.
 
@@ -166,7 +166,7 @@ La diferencia entre los botones directos y resistentes es el valor de la opción
 
 
 
-\#### Propulsores
+#### Propulsores
 
 
 
@@ -194,7 +194,7 @@ Hay 4 tipos, que se diferencian por los valores que tienen estos atributos:
 
 
 
-\#### Otros
+#### Otros
 
 
 
@@ -202,7 +202,7 @@ Objetos que no pertenecen a los grupos anteriores.
 
 
 
-\##### Resorte
+##### Resorte
 
 
 
@@ -210,7 +210,7 @@ Lanza al jugador con una fuerza predeterminada.
 
 
 
-\##### Puerta
+##### Puerta
 
 
 
@@ -218,7 +218,7 @@ Cambia la escena cuando la toca el jugador.
 
 
 
-\##### Portal
+##### Portal
 
 
 
@@ -226,7 +226,7 @@ Cambia la posición del jugador al portal al que está conectado.
 
 
 
-\##### Generador
+##### Generador
 
 
 
@@ -236,7 +236,7 @@ Crea copias de prefabs.
 
 
 
-\### Entidades
+### Entidades
 
 
 
@@ -244,7 +244,7 @@ Objetos activos en la escena
 
 
 
-\#### Jugador
+#### Jugador
 
 
 
@@ -254,7 +254,7 @@ Puede moverse, saltar, deslizarse en los muros.
 
 
 
-\#### Abeja
+#### Abeja
 
 
 
@@ -262,7 +262,7 @@ Bzzz
 
 
 
-\#### Rana
+#### Rana
 
 
 
